@@ -34,10 +34,14 @@ function Register() {
                 password: ""
             })
             handleClose();
-            return;
-        }).catch(() => {
-            toast.success("Bạn đăng ký thất bại!!")
-            return;
+        }).catch((error) => {
+            if (error.response.data === 1) {
+                toast.error("username này đã được đang ký");
+            } else if (error.response.data === 2) {
+                toast.error("email này đã được đang ký");
+            } else if (typeof error.response.data === "object") {
+                toast.error(error.response.data.defaultMessage);
+            }
         })
     }
     return (
@@ -54,7 +58,7 @@ function Register() {
                     </div>
                     <div className="col-md-3">
                         <label>Email:</label>
-                        <input className="form-control" type='text'
+                        <input className="form-control" type='text' placeholder='...@gmail.com'
                             value={user.email}
                             onChange={(e) => setUser({ ...user, email: e.target.value })}
                         />
@@ -68,7 +72,7 @@ function Register() {
                     </div>
                     <div className="col-md-3">
                         <label>Mật khẩu:</label>
-                        <input className="form-control" type='text'
+                        <input className="form-control" type='password'
                             value={user.password}
                             onChange={(e) => setUser({ ...user, password: e.target.value })}
                         />

@@ -8,8 +8,8 @@ import { toast } from "react-toastify";
 const NavAdmin = (props) => {
     let navigate = useNavigate();
     const handleClose = () => {
-        localStorage.removeItem("decodedToken");
-        localStorage.removeItem("token");
+        sessionStorage.removeItem("decodedToken");
+        sessionStorage.removeItem("token");
         props.setIsLogin(false);
         navigate("/");
         toast.success("Thoát thành công !!");

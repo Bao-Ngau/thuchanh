@@ -6,20 +6,22 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import useFetch from "../../../custom/fetchData";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Pagination } from "react-bootstrap";
 
 const TableUser = (props) => {
     const [page, setPage] = useState(0);
     const [size, setSize] = useState(5);
-    const { data: userData, isLoading, isError } = useFetch(`http://localhost:8081/user/${page}/${size}`, localStorage.getItem("token"));
+    const [search, setSearch] = useState("");
+    const [datas, setDatas] = useState([]);
+    const { data: userData, isLoading, isError } = useFetch(`http://localhost:8081/user/${page}/${size}`, sessionStorage.getItem("token"));
     let { username } = useParams();
-    let navigate = useNavigate()
-
+    let navigate = useNavigate();
     useEffect(() => {
+        setDatas(userData);
         if (username) {
-            console.log(username)
             axios.delete(`http://localhost:8081/user/${username}`, {
                 headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                    "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
                 }
             }).then(() => {
                 toast.success("Xóa thành công !!");
@@ -30,13 +32,42 @@ const TableUser = (props) => {
                     console.log("Xóa user thất bại : " + error)
                 })
         }
-    }, [username])
+    }, [username], [datas])
+    useEffect(() => {
+        if (search == "") {
+            setDatas(userData);
+        }
+    })
     const handlePageClick = (e) => {
         setPage(e.selected);
     };
     const handleOnChage = (e) => {
         setSize(e.target.value)
     };
+    const handleOnChangeSearch = (e) => {
+        setSearch(e.target.value);
+        if (!e.target.value) {
+            setDatas(userData);
+        }
+    }
+    const handleSearch = () => {
+        if (search) {
+            axios.get(`http://localhost:8081/user/search/${search}`, {
+                headers: {
+                    'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
+                }
+            }).then((response) => {
+                let array = {
+                    content: [
+                        response.data
+                    ]
+                };
+                setDatas(array);
+            }).catch((error) => {
+                toast.error(error.response.data);
+            })
+        }
+    }
     return (
         <>
             {!isLoading && !isError ?
@@ -56,9 +87,11 @@ const TableUser = (props) => {
                                     &&
                                     <Link to={"add"} className="btn btn-outline-info">Thêm người dùng</Link>}
                             </div>
-                            <div className="d-flex gap-2">
-                                <input type="search" placeholder="Nhập tên tài khoản" className="form-control" />
-                                <div className="btn btn-outline-info">
+                            <div className="d-flex gap-2" >
+                                <input type="search" placeholder="Nhập tên tài khoản" className="form-control"
+                                    value={search}
+                                    onChange={(e) => handleOnChangeSearch(e)} />
+                                <div className="btn btn-outline-info" onClick={() => handleSearch()}>
                                     <FontAwesomeIcon icon={faSearch} style={{ color: "green", }} size="lg" />
                                 </div>
                             </div>
@@ -77,7 +110,7 @@ const TableUser = (props) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {userData.content && userData.content.map((value, index) => {
+                                {datas.content && datas.content.map((value, index) => {
                                     return (
                                         <tr key={value.id}>
                                             <th scope="row">{value.id}</th>
@@ -99,28 +132,30 @@ const TableUser = (props) => {
                                 })}
                             </tbody>
                         </table>
-                        <div className="d-flex justify-content-center">
-                            <ReactPaginate
-                                nextLabel="Tiếp"
-                                onPageChange={(e) => handlePageClick(e)}
-                                pageRangeDisplayed={3}//số hiển thị ở giữa
-                                marginPagesDisplayed={2}//số cái hiện thị đầu cuối
-                                pageCount={userData.totalPages}
-                                previousLabel="Trở về"
-                                pageClassName="page-item"
-                                pageLinkClassName="page-link"
-                                previousClassName="page-item"
-                                previousLinkClassName="page-link"
-                                nextClassName="page-item"
-                                nextLinkClassName="page-link"
-                                breakLabel="..."
-                                breakClassName="page-item"
-                                breakLinkClassName="page-link"
-                                containerClassName="pagination"
-                                activeClassName="active"
-                                renderOnZeroPageCount={null}
-                            />
-                        </div>
+                        {search === "" &&
+                            <div className="d-flex justify-content-center">
+                                <ReactPaginate
+                                    nextLabel="Tiếp"
+                                    onPageChange={(e) => handlePageClick(e)}
+                                    pageRangeDisplayed={3}//số hiển thị ở giữa
+                                    marginPagesDisplayed={2}//số cái hiện thị đầu cuối
+                                    pageCount={userData.totalPages}
+                                    previousLabel="Trở về"
+                                    pageClassName="page-item"
+                                    pageLinkClassName="page-link"
+                                    previousClassName="page-item"
+                                    previousLinkClassName="page-link"
+                                    nextClassName="page-item"
+                                    nextLinkClassName="page-link"
+                                    breakLabel="..."
+                                    breakClassName="page-item"
+                                    breakLinkClassName="page-link"
+                                    containerClassName="pagination"
+                                    activeClassName="active"
+                                    renderOnZeroPageCount={null}
+                                />
+                            </div>
+                        }
                     </div>
                 </>
                 :

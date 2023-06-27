@@ -11,11 +11,11 @@ const RenderToken = (props) => {
         if (props.showToken) {
             await axios.post("http://localhost:8081/api/v1/auth/authenticate/recreate", {}, {
                 headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                    "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
                 }
             }).then((response) => {
                 let data = response.data.token;
-                localStorage.setItem("token", data);
+                sessionStorage.setItem("token", data);
                 toast.success("Bạn gia hạn thành công !!");
             }).catch((error) => {
                 console.log("Gia hạn thất bại: " + error);
@@ -30,8 +30,8 @@ const RenderToken = (props) => {
         handleNo();
     }
     const handleNo = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("decodedToken");
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("decodedToken");
         if (props.setIsLogin) {
             props.setIsLogin(false);
         }

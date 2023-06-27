@@ -24,8 +24,8 @@ function Login(props) {
             password: user.password
         }).then((response) => {
             toast.success("Đăng nhập thành công !!");
-            localStorage.setItem("token", response.data.token);
-            localStorage.setItem("decodedToken", JSON.stringify(tokenDecoder(response.data.token)));
+            sessionStorage.setItem("token", response.data.token);
+            sessionStorage.setItem("decodedToken", JSON.stringify(tokenDecoder(response.data.token)));
             setUser({
                 username: "",
                 password: ""
@@ -58,7 +58,7 @@ function Login(props) {
                     </div>
                     <div className="col-md-4">
                         <label>Mật khẩu:</label>
-                        <input className="form-control" type='text'
+                        <input className="form-control" type='password'
                             value={user.password}
                             onChange={(e) => setUser({ ...user, password: e.target.value })}
                         />

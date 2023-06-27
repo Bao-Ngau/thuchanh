@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -25,4 +26,8 @@ public interface UserRepository extends JpaRepository<User,Long> {
     @Transactional
     @Query("update User tb set tb.status = 0 where tb.username = :username")
     void updateStatus(@Param("username") String username);
+
+    Integer countByEmail(String email);
+    Integer countByUsername(String username);
+    Optional<User> searchByUsername(String username);
 }

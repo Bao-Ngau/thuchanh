@@ -6,12 +6,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 const Navv = (props) => {
 
-    let userJson = localStorage.getItem("decodedToken")
+    let userJson = sessionStorage.getItem("decodedToken")
     let userPaser = JSON.parse(userJson);
     const navigate = useNavigate();
     const handleClose = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("decodedToken");
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("decodedToken");
         toast.success("Đăng xuất thành công !!");
         if (props.setIsLogin && typeof props.setIsLogin === "function") {
             props.setIsLogin(false);

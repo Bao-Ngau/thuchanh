@@ -52,8 +52,7 @@ public class AuthenticationService {
                 .build();
     }
 
-    public AuthenticationResponse authenticateRecreate(AuthenticationRequest request) {
-
+    public AuthenticationResponse authenticateRecreate() {
         String authHeader = requestt.getHeader("Authorization");
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             System.out.println("Missing or invalid Authorization header: " + authHeader);
@@ -73,5 +72,26 @@ public class AuthenticationService {
         return AuthenticationResponse.builder()
                 .token(jwtTokenGenerateRecreate)
                 .build();
+    }
+    public String checkCountUsernameOrEmail(RegisterRequest request){
+        String message = null;
+        if (checkCountUsername(request.getUsername())){
+            message = "1";
+        }else if (checkCountEmail(request.getEmail())){
+            message = "2";
+        }
+        return message;
+    }
+    public boolean checkCountUsername(String username){
+        if (userRepository.countByUsername(username)==1){
+            return true;
+        }
+        return false;
+    }
+    public boolean checkCountEmail(String email){
+        if (userRepository.countByEmail(email)==1){
+            return true;
+        }
+        return false;
     }
 }

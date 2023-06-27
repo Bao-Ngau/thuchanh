@@ -6,7 +6,7 @@ import HomeAdmin from "./HomeAmin";
 import AddUser from "./user/AddUser";
 import EditUser from "./user/EditUser";
 const RouteAdmin = (props) => {
-    let getTokenDecode = localStorage.getItem("decodedToken");
+    let getTokenDecode = sessionStorage.getItem("decodedToken");
     let paserToken = JSON.parse(getTokenDecode);
     return (
         <>

@@ -30,23 +30,30 @@ function AddUser() {
     }
     const submitAdd = (e) => {
         e.preventDefault();
-        if (!infoUser.email || !infoUser.fullname || !infoUser.username || !infoUser.role || infoUser.role == "1" || !infoUser.password) {
+        if (!infoUser.email || !infoUser.fullname || !infoUser.username || !infoUser.role || infoUser.role === "1" || !infoUser.password) {
             toast.error("Vui lòng nhập đủ các trường !!");
             return;
         } else {
             axios.post("http://localhost:8081/user/create", infoUser, {
                 headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                    "Authorization": `Bearer ${sessionStorage.getItem("token")}`
                 }
             })
-                .then(() => {
+                .then((response) => {
                     toast.success("Thêm thành công !!");
+                    console.log(response)
                     navigate("/admin/tableUser");
                 })
-                .catch((error => {
+                .catch((error) => {
+                    if (error.response.data === 1) {
+                        toast.error("username này đã được đang ký");
+                    } else if (error.response.data === 2) {
+                        toast.error("email này đã được đang ký");
+                    } else if (typeof error.response.data === "object") {
+                        toast.error(error.response.data.defaultMessage);
+                    }
                     toast.error("Thêm user thất bại !!");
-                    console.log("Thêm user thất bại: " + error);
-                }))
+                })
         }
     }
     return (
@@ -58,28 +65,28 @@ function AddUser() {
                         <div className='d-flex flex-column align-items-center'>
                             <div className='col-md-3'>
                                 <label>Họ và tên:</label>
-                                <input className='form-control mt-1'
+                                <input className='form-control mt-1' type='text'
                                     value={infoUser.fullname}
                                     onChange={(e) => setInfoUser({ ...infoUser, fullname: e.target.value })}
                                 />
                             </div>
                             <div className='col-md-3'>
                                 <label>Tên tài khoản:</label>
-                                <input className='form-control mt-1'
+                                <input className='form-control mt-1' type='text'
                                     value={infoUser.username}
                                     onChange={(e) => setInfoUser({ ...infoUser, username: e.target.value })}
                                 />
                             </div>
                             <div className='col-md-3'>
                                 <label>Mật khẩu:</label>
-                                <input className='form-control mt-1'
+                                <input className='form-control mt-1' type='password'
                                     value={infoUser.password}
                                     onChange={(e) => setInfoUser({ ...infoUser, password: e.target.value })}
                                 />
                             </div>
                             <div className='col-md-3'>
                                 <label>Email:</label>
-                                <input className='form-control mt-1'
+                                <input className='form-control mt-1' placeholder='...@gmail.com' type='text'
                                     value={infoUser.email}
                                     onChange={(e) => setInfoUser({ ...infoUser, email: e.target.value })}
                                 />

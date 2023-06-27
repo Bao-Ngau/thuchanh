@@ -33,7 +33,7 @@ public class UserService implements IUserService {
         return userRepository.findAll(pageable);
     }
     @Override
-    public User saveUser(RegisterRequest request) {
+    public User saveUser( RegisterRequest request) {
         var userOne = User.builder()
                 .fullname(request.getFullname())
                 .email(request.getEmail())
@@ -62,5 +62,10 @@ public class UserService implements IUserService {
     @Override
     public void deleteUser(String username) {
         userRepository.updateStatus(username);
+    }
+
+    @Override
+    public Optional<User> searchUserByUsername(String username) {
+        return userRepository.searchByUsername(username);
     }
 }

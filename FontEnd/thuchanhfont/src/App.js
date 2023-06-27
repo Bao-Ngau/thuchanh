@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Home from "./views/home/Home";
 import "bootstrap/dist/css/bootstrap.min.css"
 import { ToastContainer } from "react-toastify";
@@ -14,9 +14,9 @@ function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [token, setToken] = useState("");
   const [time, setTime] = useState();
-
   useEffect(() => {
-    setToken(localStorage.getItem("decodedToken"));
+    setToken(sessionStorage.getItem("decodedToken"));
+    console.log(token)
     if (isLogin && token) {
       const tokenParser = JSON.parse(token);
       const timeOut = (tokenParser.exp - tokenParser.iat - 60) * 1000;

@@ -27,7 +27,7 @@ const EditUser = () => {
         const getUser = async () => {
             await axios.get(`http://localhost:8081/user/${username}`, {
                 headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                    "Authorization": `Bearer ${sessionStorage.getItem("token")}`
                 }
             }).then((response) => {
                 setInfoUser({
@@ -43,29 +43,25 @@ const EditUser = () => {
         }
         getUser();
     }, []);
-    console.log(infoUser);
     const navigate = useNavigate();
     const handleClose = () => {
         navigate("/admin/tableUser");
     }
-    console.log(infoUser);
     const submitEdit = (e) => {
         e.preventDefault();
         axios.put(`http://localhost:8081/user/update/${id}`, infoUser, {
             headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
+                "Authorization": `Bearer ${sessionStorage.getItem("token")}`
             }
         }).then(() => {
             toast.success("Sửa thành công !!");
-            handleClose();
-        }).catch((error) => {
-            toast.error("Thêm user thất bại !!");
-            console.log("Sửa user thất bại: " + error)
+            navigate("/admin/tableUser");
+        }).catch(() => {
+            toast.error("Sửa user thất bại !!");
         });
     }
     return (
         <>
-            <div>hahah</div>
             <div style={{ padding: "6%" }}>
                 <div className='container'>
                     <h3 className='text-center'>Sửa thông tin người dùng</h3>
@@ -108,7 +104,7 @@ const EditUser = () => {
                             </div>
                             <div className='d-flex gap-2 justify-content-end col-md-3 mt-3'>
                                 <button className='btn btn-outline-primary' type='submit'>Sửa</button>
-                                <button className='btn btn-outline-secondary' onClick={() => handleClose()}>Quay lại</button>
+                                <button className='btn btn-outline-secondary' type="button" onClick={() => handleClose()}>Quay lại</button>
                             </div>
                         </div>
                     </form>

@@ -33,7 +33,7 @@ public class UserService implements IUserService {
         return userRepository.findAll(pageable);
     }
     @Override
-    public User saveUser( RegisterRequest request) {
+    public User saveUser(RegisterRequest request) {
         var userOne = User.builder()
                 .fullname(request.getFullname())
                 .email(request.getEmail())

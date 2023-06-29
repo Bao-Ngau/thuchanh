@@ -6,9 +6,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import useFetch from "../../../custom/fetchData";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { Pagination } from "react-bootstrap";
 
-const TableUser = (props) => {
+const ListUser = (props) => {
     const [page, setPage] = useState(0);
     const [size, setSize] = useState(5);
     const [search, setSearch] = useState("");
@@ -17,7 +16,6 @@ const TableUser = (props) => {
     let { username } = useParams();
     let navigate = useNavigate();
     useEffect(() => {
-        setDatas(userData);
         if (username) {
             axios.delete(`http://localhost:8081/user/${username}`, {
                 headers: {
@@ -32,8 +30,6 @@ const TableUser = (props) => {
                     console.log("Xóa user thất bại : " + error)
                 })
         }
-    }, [username], [datas])
-    useEffect(() => {
         if (search == "") {
             setDatas(userData);
         }
@@ -167,4 +163,4 @@ const TableUser = (props) => {
         </>
     )
 }
-export default TableUser;
+export default ListUser;

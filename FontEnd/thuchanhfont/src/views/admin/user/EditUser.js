@@ -45,7 +45,7 @@ const EditUser = () => {
     }, []);
     const navigate = useNavigate();
     const handleClose = () => {
-        navigate("/admin/tableUser");
+        navigate("/admin/listUser");
     }
     const submitEdit = (e) => {
         e.preventDefault();
@@ -55,7 +55,7 @@ const EditUser = () => {
             }
         }).then(() => {
             toast.success("Sửa thành công !!");
-            navigate("/admin/tableUser");
+            navigate("/admin/listUser");
         }).catch(() => {
             toast.error("Sửa user thất bại !!");
         });

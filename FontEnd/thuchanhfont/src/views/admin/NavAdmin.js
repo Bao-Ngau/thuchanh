@@ -25,8 +25,9 @@ const NavAdmin = (props) => {
                     <Navbar.Collapse id="navbarSupportedContent">
                         <Nav className="me-auto mb-2 mb-lg-0" >
                             <NavLink to={"/"} className="nav-link">Trang chủ</NavLink>
-                            <NavLink to={"/admin/tableUser"} className="nav-link">Tài Khoản</NavLink>
+                            <NavLink to={"/admin/listUser"} className="nav-link">Tài Khoản</NavLink>
                             <NavLink to={"#"} className="nav-link">Thông tin sách</NavLink>
+                            <NavLink to={"/admin/listCategory"} className="nav-link">Thể loại</NavLink>
                         </Nav>
                         <Dropdown>
                             <Dropdown.Toggle variant="none" className="btn btn-outline-success text-white">

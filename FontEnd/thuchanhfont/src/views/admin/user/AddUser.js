@@ -26,7 +26,7 @@ function AddUser() {
     }, [])
     let navigate = useNavigate();
     const handleClose = () => {
-        navigate("/admin/tableUser");
+        navigate("/admin/listUser");
     }
     const submitAdd = (e) => {
         e.preventDefault();
@@ -42,7 +42,7 @@ function AddUser() {
                 .then((response) => {
                     toast.success("Thêm thành công !!");
                     console.log(response)
-                    navigate("/admin/tableUser");
+                    navigate("/admin/listUser");
                 })
                 .catch((error) => {
                     if (error.response.data === 1) {

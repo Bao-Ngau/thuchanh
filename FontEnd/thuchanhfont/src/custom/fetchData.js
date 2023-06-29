@@ -8,7 +8,7 @@ const useFecth = (url, token) => {
 
     useEffect(() => {
         const controller = new AbortController();
-        const fetchData = async () => {
+        const fetchData = (async () => {
             await axios.get(url, {
                 data: controller.signal,
                 headers: {
@@ -30,7 +30,7 @@ const useFecth = (url, token) => {
             return () => {
                 controller.abort("Operation canceled by the user.")
             }
-        }
+        });
         fetchData();
     }, [url, token])
     return { data, isLoading, isError };

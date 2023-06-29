@@ -1,32 +1,38 @@
 import { Route, Router, Routes } from "react-router-dom";
 import NavAdmin from "./NavAdmin";
 import "bootstrap/dist/css/bootstrap.min.css";
-import TableUser from "./user/TableUser";
+import ListUser from "./user/ListUser";
 import HomeAdmin from "./HomeAmin";
 import AddUser from "./user/AddUser";
 import EditUser from "./user/EditUser";
+import ListCategory from "./category/ListCategory";
 const RouteAdmin = (props) => {
     let getTokenDecode = sessionStorage.getItem("decodedToken");
     let paserToken = JSON.parse(getTokenDecode);
     return (
         <>
-            {/* <div className="sb-nav-fixed"> */}
             <NavAdmin
                 fullName={getTokenDecode ? paserToken.fullName : null}
                 setIsLogin={props.setIsLogin}
             />
             <Routes>
                 <Route path="/" element={<HomeAdmin />} />
-                <Route path="/tableUser"
+
+                <Route path="/listUser"
                     element={
-                        <TableUser role={getTokenDecode ? paserToken.role : null} />
+                        <ListUser role={getTokenDecode ? paserToken.role : null} />
                     }
                 />
-                <Route path="/tableUser/add" element={<AddUser />} />
-                <Route path="/tableUser/edit/:username" element={<EditUser />} />
-                <Route path="/tableUser/:username" element={<TableUser />} />
+                <Route path="/listUser/add" element={<AddUser />} />
+                <Route path="/listUser/edit/:username" element={<EditUser />} />
+                <Route path="/listUser/:username" element={<ListUser />} />
+
+                <Route path="/listCategory"
+                    element={
+                        <ListCategory role={getTokenDecode ? paserToken.role : null} />
+                    }
+                />
             </Routes>
-            {/* </div> */}
         </>
     )
 }

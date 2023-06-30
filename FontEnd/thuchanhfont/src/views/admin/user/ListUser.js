@@ -13,24 +13,8 @@ const ListUser = (props) => {
     const [search, setSearch] = useState("");
     const [datas, setDatas] = useState([]);
     const { data: userData, isLoading, isError } = useFetch(`http://localhost:8081/user/${page}/${size}`, sessionStorage.getItem("token"));
-    let { username } = useParams();
-    let navigate = useNavigate();
     useEffect(() => {
-        if (username) {
-            axios.delete(`http://localhost:8081/user/${username}`, {
-                headers: {
-                    "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
-                }
-            }).then(() => {
-                toast.success("Xóa thành công !!");
-                navigate("/admin/tableUser")
-            })
-                .catch((error) => {
-                    toast.error("Xóa user thất bại !!");
-                    console.log("Xóa user thất bại : " + error)
-                })
-        }
-        if (search == "") {
+        if (search === "") {
             setDatas(userData);
         }
     })
@@ -62,6 +46,23 @@ const ListUser = (props) => {
             }).catch((error) => {
                 toast.error(error.response.data);
             })
+        }
+    }
+    const handleDelete = (value) => {
+        if (value.username) {
+            axios.delete(`http://localhost:8081/user/${value.username}`, {
+                headers: {
+                    "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
+                }
+            }).then(() => {
+                toast.success("Xóa thành công !!");
+                setTimeout(() => {
+                    window.location.reload();
+                }, [1500])
+            })
+                .catch((error) => {
+                    toast.error("Xóa user thất bại !!");
+                })
         }
     }
     return (
@@ -120,7 +121,7 @@ const ListUser = (props) => {
                                                 &&
                                                 <td className="d-flex gap-1 justify-content-center">
                                                     <Link to={`edit/${value.username}`} className="btn btn-outline-warning">Sửa</Link>
-                                                    <Link to={`${value.username}`} className="btn btn-outline-danger">Xóa</Link>
+                                                    <button className="btn btn-outline-danger" onClick={() => handleDelete(value)}>Xóa</button>
                                                 </td>
                                             }
                                         </tr>

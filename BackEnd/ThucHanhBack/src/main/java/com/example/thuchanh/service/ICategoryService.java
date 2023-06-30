@@ -8,5 +8,6 @@ public interface ICategoryService {
     Category saveCategory(Category category, String username);
     Category updateCategory(Category category, String username);
     void deleteCategory(Long id);
+    Category searchCategory(String name);
     Boolean checkName(String name);
 }

@@ -49,6 +49,10 @@ const EditUser = () => {
     }
     const submitEdit = (e) => {
         e.preventDefault();
+        if (!infoUser.email || !infoUser.fullname || !infoUser.username || !infoUser.role) {
+            toast.error("Vui lòng nhập đủ các trường !!");
+            return;
+        }
         axios.put(`http://localhost:8081/user/update/${id}`, infoUser, {
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem("token")}`

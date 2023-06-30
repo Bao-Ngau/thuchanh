@@ -42,7 +42,6 @@ function AddUser() {
                 .then((response) => {
                     toast.success("Thêm thành công !!");
                     console.log(response)
-                    navigate("/admin/listUser");
                 })
                 .catch((error) => {
                     if (error.response.data === 1) {

@@ -34,4 +34,12 @@ public class CategoryController {
     public void deleteCategory(@PathVariable("id") Long id){
         categoryService.deleteCategory(id);
     }
+    @GetMapping("/search/{name}")
+    public ResponseEntity<?> searchCategory(@PathVariable("name") String name){
+        if (!categoryService.checkName(name)){
+            return ResponseEntity.status(400).body("Tên thể loại không tồn tại");
+        }else {
+            return ResponseEntity.ok(categoryService.searchCategory(name));
+        }
+    }
 }

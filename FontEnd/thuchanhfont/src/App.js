@@ -16,7 +16,6 @@ function App() {
   const [time, setTime] = useState();
   useEffect(() => {
     setToken(sessionStorage.getItem("decodedToken"));
-    console.log(token)
     if (isLogin && token) {
       const tokenParser = JSON.parse(token);
       const timeOut = (tokenParser.exp - tokenParser.iat - 60) * 1000;
@@ -29,7 +28,8 @@ function App() {
   }, [isLogin, token, time, showToken]);
   return (
     <>
-      {showToken && <RenderToken showToken={showToken}
+      {showToken && <RenderToken
+        showToken={showToken}
         setIsLogin={setIsLogin}
         setShowToken={setShowToken}
       />}

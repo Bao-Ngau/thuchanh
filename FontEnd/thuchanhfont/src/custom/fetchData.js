@@ -15,7 +15,6 @@ const useFecth = (url, token) => {
                     'Authorization': `Bearer ${token}`,
                 }
             }).then((response) => {
-                console.log(response.data)
                 setData(response.data);
             }).catch((error) => {
 

@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 public interface CategoryRepository extends JpaRepository<Category,Long> {
     Page<Category> findAll(Pageable pageable);
     Integer countByName(String name);
+    Category findByName(String name);
 }

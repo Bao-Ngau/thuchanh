@@ -53,6 +53,11 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
+    public Category searchCategory(String name) {
+        return categoryRepository.findByName(name);
+    }
+
+    @Override
     public Boolean checkName(String name) {
         if (categoryRepository.countByName(name)==1){
             return true;

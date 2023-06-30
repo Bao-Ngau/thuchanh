@@ -29,7 +29,10 @@ const RouteAdmin = (props) => {
 
                 <Route path="/listCategory"
                     element={
-                        <ListCategory role={getTokenDecode ? paserToken.role : null} />
+                        <ListCategory
+                            role={getTokenDecode ? paserToken.role : null}
+                            userName={getTokenDecode ? paserToken.sub : null}
+                        />
                     }
                 />
             </Routes>

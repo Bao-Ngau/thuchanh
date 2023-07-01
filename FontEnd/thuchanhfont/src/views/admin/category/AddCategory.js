@@ -40,7 +40,7 @@ const AddCategory = (props) => {
                 Thêm thông tin
             </Button>
             <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
+                <Modal.Header >
                     <Modal.Title>Sửa thông tin thể loại</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>

@@ -35,6 +35,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                         .requestMatchers("/role/**").permitAll()
                         .requestMatchers("/user/**").hasAnyAuthority(ERole.ADMIN.name(),ERole.SUPER_ADMIN.name())
                         .requestMatchers("/category/**").hasAnyAuthority(ERole.ADMIN.name(),ERole.SUPER_ADMIN.name())
+                        .requestMatchers("/author/**").hasAnyAuthority(ERole.ADMIN.name(),ERole.SUPER_ADMIN.name())
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess->sess

@@ -28,6 +28,7 @@ const NavAdmin = (props) => {
                             <NavLink to={"/admin/listUser"} className="nav-link">Tài Khoản</NavLink>
                             <NavLink to={"#"} className="nav-link">Thông tin sách</NavLink>
                             <NavLink to={"/admin/listCategory"} className="nav-link">Thể loại</NavLink>
+                            <NavLink to={"/admin/listAuthor"} className="nav-link">Tác giả</NavLink>
                         </Nav>
                         <Dropdown>
                             <Dropdown.Toggle variant="none" className="btn btn-outline-success text-white">

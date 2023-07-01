@@ -1,26 +1,24 @@
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ReactPaginate from "react-paginate";
 import useFecth from "../../../custom/fetchData";
-import AddCategory from "./AddCategory";
-import EditCategory from "./EditCategory";
 import axios from "axios";
 import { toast } from "react-toastify";
+import AddAuthor from "./AddAuthor";
+import EditAuthor from "./EditAuthor";
 
 
-const ListCategory = (props) => {
+const ListAuthor = (props) => {
     const [page, setPage] = useState(0);
     const [size, setSize] = useState(5);
     const [search, setSearch] = useState("");
     const [datas, setDatas] = useState([]);
-    const { data: dataCategory, isLoading, isError } = useFecth(`http://localhost:8081/category/${page}/${size}`, sessionStorage.getItem("token"));
+    const { data: dataCategory, isLoading, isError } = useFecth(`http://localhost:8081/author/${page}/${size}`, sessionStorage.getItem("token"));
     useEffect(() => {
         if (search === "") {
             setDatas(dataCategory);
         }
-        console.log(datas);
     });
     const handleOnChage = (e) => {
         setSize(e.target.value);
@@ -34,7 +32,7 @@ const ListCategory = (props) => {
     const handleOnClickSearch = () => {
         if (search !== "") {
             console.log("a");
-            axios.get(`http://localhost:8081/category/search/${search}`, {
+            axios.get(`http://localhost:8081/author/search/${search}`, {
                 headers: {
                     'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
                 }
@@ -53,7 +51,7 @@ const ListCategory = (props) => {
     }
     const handleDelete = (value) => {
         if (value.id) {
-            axios.delete(`http://localhost:8081/category/delete/${value.id}`, {
+            axios.delete(`http://localhost:8081/author/delete/${value.id}`, {
                 headers: {
                     'Authorization': `Bearer ${sessionStorage.getItem("token")}`
                 }
@@ -86,7 +84,7 @@ const ListCategory = (props) => {
                                 </select>
                                 {(props.role === "SUPER_ADMIN" || props.role === "ADMIN")
                                     &&
-                                    <AddCategory
+                                    <AddAuthor
                                         userName={props.userName}
                                     />
                                 }
@@ -104,7 +102,7 @@ const ListCategory = (props) => {
                             <thead>
                                 <tr>
                                     <th scope="col">Mã</th>
-                                    <th scope="col">Tên thể loại</th>
+                                    <th scope="col">Tên tác giả</th>
                                     <th scope="col">CreatedDate</th>
                                     <th scope="col">CreatedBy</th>
                                     {(props.role === "SUPER_ADMIN" || props.role === "ADMIN") && <th scope="col">Thao tác</th>}
@@ -121,7 +119,7 @@ const ListCategory = (props) => {
                                             {(props.role === "SUPER_ADMIN" || props.role === "ADMIN")
                                                 &&
                                                 <td className="d-flex gap-1 justify-content-center">
-                                                    <EditCategory
+                                                    <EditAuthor
                                                         userName={props.userName}
                                                         value={value}
                                                     />
@@ -169,4 +167,4 @@ const ListCategory = (props) => {
         </>
     )
 }
-export default ListCategory;
+export default ListAuthor;

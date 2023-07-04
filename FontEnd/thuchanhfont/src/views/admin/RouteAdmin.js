@@ -7,6 +7,7 @@ import AddUser from "./user/AddUser";
 import EditUser from "./user/EditUser";
 import ListCategory from "./category/ListCategory";
 import ListAuthor from "./author/ListAuthor";
+import ListBook from "./book/ListBook";
 const RouteAdmin = (props) => {
     let getTokenDecode = sessionStorage.getItem("decodedToken");
     let paserToken = JSON.parse(getTokenDecode);
@@ -15,6 +16,7 @@ const RouteAdmin = (props) => {
             <NavAdmin
                 fullName={getTokenDecode ? paserToken.fullName : null}
                 setIsLogin={props.setIsLogin}
+                role={getTokenDecode ? paserToken.role : null}
             />
             <Routes>
                 <Route path="/" element={<HomeAdmin />} />
@@ -39,6 +41,14 @@ const RouteAdmin = (props) => {
                 <Route path="/listAuthor"
                     element={
                         <ListAuthor
+                            role={getTokenDecode ? paserToken.role : null}
+                            userName={getTokenDecode ? paserToken.sub : null}
+                        />
+                    }
+                />
+                <Route path="/listBook"
+                    element={
+                        <ListBook
                             role={getTokenDecode ? paserToken.role : null}
                             userName={getTokenDecode ? paserToken.sub : null}
                         />

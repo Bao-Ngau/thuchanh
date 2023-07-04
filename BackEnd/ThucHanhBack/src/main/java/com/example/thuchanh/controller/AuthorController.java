@@ -41,4 +41,8 @@ public class AuthorController {
         }
         return ResponseEntity.ok(authorService.searchAuthor(name));
     }
+    @GetMapping("/get")
+    private ResponseEntity<?> getAllNoPage(){
+        return ResponseEntity.ok(authorService.findAll());
+    }
 }

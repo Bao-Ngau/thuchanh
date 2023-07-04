@@ -42,4 +42,9 @@ public class CategoryController {
             return ResponseEntity.ok(categoryService.searchCategory(name));
         }
     }
+    @GetMapping("/get")
+    public ResponseEntity<?> findAll(){
+        return ResponseEntity.ok(categoryService.findAll());
+    }
+
 }

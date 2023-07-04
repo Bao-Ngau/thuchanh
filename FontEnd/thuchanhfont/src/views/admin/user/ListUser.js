@@ -82,7 +82,8 @@ const ListUser = (props) => {
                                 </select>
                                 {props.role === "SUPER_ADMIN"
                                     &&
-                                    <Link to={"add"} className="btn btn-outline-info">Thêm người dùng</Link>}
+                                    <Link to={"add"} className="btn btn-outline-info">Thêm người dùng</Link>
+                                }
                             </div>
                             <div className="d-flex gap-2" >
                                 <input type="search" placeholder="Nhập tên tài khoản" className="form-control"

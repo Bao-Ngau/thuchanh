@@ -57,13 +57,13 @@ const ListAuthor = (props) => {
                 }
             }).then((response) => {
                 if (response.status === 200) {
-                    toast.success("Xóa thông tin thể loại thành công");
+                    toast.success("Xóa thông tin tác giả thành công");
                     setTimeout(() => {
                         window.location.reload();
                     }, [1500])
                 }
             }).catch(() => {
-                toast.success("Xóa thông tin thể loại thất bại");
+                toast.success("Xóa thông tin tác giả thất bại");
             });
         }
     }
@@ -72,10 +72,10 @@ const ListAuthor = (props) => {
             {!isLoading && !isError ?
                 <>
                     <div style={{ padding: "6%" }}>
-                        <h3 className="text-center">Thông tin tài khoản người dùng</h3>
+                        <h3 className="text-center">Thông tin tác giả</h3>
                         <div className="d-flex justify-content-between">
                             <div className="d-flex gap-2">
-                                <label>Số lượng người dùng hiện thị: </label>
+                                <label>Số lượng tác giả hiện thị: </label>
                                 <select defaultValue={"5"} onChange={(e) => handleOnChage(e)}>
                                     <option value={5}>5</option>
                                     <option value={7}>7</option>
@@ -103,8 +103,8 @@ const ListAuthor = (props) => {
                                 <tr>
                                     <th scope="col">Mã</th>
                                     <th scope="col">Tên tác giả</th>
-                                    <th scope="col">CreatedDate</th>
-                                    <th scope="col">CreatedBy</th>
+                                    <th scope="col">Ngày thêm</th>
+                                    <th scope="col">Người sửa</th>
                                     {(props.role === "SUPER_ADMIN" || props.role === "ADMIN") && <th scope="col">Thao tác</th>}
                                 </tr>
                             </thead>

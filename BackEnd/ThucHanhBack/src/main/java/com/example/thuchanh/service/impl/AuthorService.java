@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -60,5 +61,9 @@ public class AuthorService implements IAuthorService {
             return true;
         }
         return false;
+    }
+    @Override
+    public List<Author> findAll() {
+        return authorRepository.findAll();
     }
 }

@@ -25,8 +25,8 @@ const NavAdmin = (props) => {
                     <Navbar.Collapse id="navbarSupportedContent">
                         <Nav className="me-auto mb-2 mb-lg-0" >
                             <NavLink to={"/"} className="nav-link">Trang chủ</NavLink>
-                            <NavLink to={"/admin/listUser"} className="nav-link">Tài Khoản</NavLink>
-                            <NavLink to={"#"} className="nav-link">Thông tin sách</NavLink>
+                            {(props.role === "SUPER_ADMIN" || (props.role === "ADMIN")) && <NavLink to={"/admin/listUser"} className="nav-link">Tài Khoản</NavLink>}
+                            <NavLink to={"/admin/listBook"} className="nav-link">Thông tin sách</NavLink>
                             <NavLink to={"/admin/listCategory"} className="nav-link">Thể loại</NavLink>
                             <NavLink to={"/admin/listAuthor"} className="nav-link">Tác giả</NavLink>
                         </Nav>

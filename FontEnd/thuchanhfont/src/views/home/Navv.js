@@ -17,24 +17,32 @@ const Navv = (props) => {
             props.setIsLogin(false);
         }
         navigate("/");
-    }
+    };
+
     return (
         <>
             <Navbar bg='primary' variant='dark' expand="lg" style={{ position: 'sticky', top: 0, zIndex: 1 }}>
                 <div className="container-fluid">
-                    <Navbar.Brand to="#">Navbar</Navbar.Brand>
+                    <Navbar.Brand to="#">Shop Book</Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarSupportedContent" className='btn-outline-info'>
                         <FontAwesomeIcon icon={faBars} />
                     </Navbar.Toggle>
                     <Navbar.Collapse id="navbarSupportedContent" className='justify-content-between'>
                         <Nav className="navbar-nav">
-                            <Nav.Link to="#" className="nav-link" aria-current="page">Home</Nav.Link>
-                            <Nav.Link to="#" className="nav-link">Features</Nav.Link>
-                            <Nav.Link to="#" className="nav-link">Pricing</Nav.Link>
-                            <NavDropdown title="Dropdown Link" id="dropdown-basic">
-                                <NavDropdown.Item>Action</NavDropdown.Item>
-                                <NavDropdown.Item>Another action</NavDropdown.Item>
-                                <NavDropdown.Item>Something else</NavDropdown.Item>
+                            {/* <Nav.Link to="#" className="nav-link">Thể loại</Nav.Link> */}
+                            <NavDropdown title="Thể loại" id="dropdown-basic">
+                                {props.dataCategorys && props.dataCategorys.map((value, index) => {
+                                    return (
+                                        <NavDropdown.Item key={index}>{value.name}</NavDropdown.Item>
+                                    )
+                                })}
+                            </NavDropdown>
+                            <NavDropdown title="Tác giả" id="dropdown-basic">
+                                {props.dataAuthors && props.dataAuthors.map((value, index) => {
+                                    return (
+                                        <NavDropdown.Item key={index}>{value.name}</NavDropdown.Item>
+                                    )
+                                })}
                             </NavDropdown>
                         </Nav>
                         <div className="d-flex gap-1">
@@ -53,7 +61,7 @@ const Navv = (props) => {
                                         <span>Xin chào, {userPaser.fullName} </span>
                                         <FontAwesomeIcon icon={faUser} />
                                     </Dropdown.Toggle>
-                                    <Dropdown.Menu className="p-1">
+                                    <Dropdown.Menu className="p-1 p">
                                         {(userPaser.role === "ADMIN" || userPaser.role === "SUPER_ADMIN") && (
                                             <Dropdown.Item className="border-bottom">
                                                 <Link to={"/admin"} className="nav-link">Dashboard</Link>

@@ -16,7 +16,9 @@ const AddBook = (props) => {
         title: "",
         description: "",
         price: "",
+        priceend: "",
         count: "",
+        sale: "",
         publicationdate: "",
         author: {
             id: ""
@@ -28,15 +30,28 @@ const AddBook = (props) => {
     useEffect(() => {
         getAuthor();
         getCategory();
-        console.log(data);
-    }, [data])
-    console.log(file);
+    }, [])
+    useEffect(() => {
+        if (data.price && data.sale && parseInt(data.price) >= parseInt(data.sale)) {
+            setData({
+                ...data, priceend: (data.price - data.sale)
+            })
+        } else if (parseInt(data.price) < parseInt(data.sale)) {
+            setData({
+                ...data, priceend: (0)
+            })
+        }
+    }, [data.price, data.sale])
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!isDataEmpty(data) && !data.author.id && !data.category.id) {
             toast.error("Vui lòng nhập đủ các trường !!");
+            return;
+        }
+        if (parseInt(data.price) < parseInt(data.sale)) {
+            toast.error("Giảm giá phải nhỏ hơn hoặc bằng giá bán !!");
             return;
         }
         const formData = new FormData();
@@ -47,7 +62,8 @@ const AddBook = (props) => {
             }
         }).then((reponse) => {
             var array = { ...data, imagefile: reponse.data };
-            axios.post(`http://localhost:8081/book/${props.userName}`, array, {
+            console.log(array);
+            axios.post(`http://localhost:8081/book/add/${props.userName}`, array, {
                 headers: {
                     Authorization: `Bearer ${sessionStorage.getItem("token")}`
                 }
@@ -58,7 +74,9 @@ const AddBook = (props) => {
                         title: "",
                         description: "",
                         price: "",
+                        priceend: "",
                         count: "",
+                        sale: "",
                         publicationdate: "",
                         author: {
                             id: ""
@@ -69,6 +87,9 @@ const AddBook = (props) => {
                     });
                     setFile("");
                     toast.success("Thêm thông tin sách thành công");
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, [1000]);
                     return;
                 }
             }).catch((error) => {
@@ -82,7 +103,6 @@ const AddBook = (props) => {
         })
     };
     const handleOnClickClose = () => {
-        window.location.reload();
         handleClose();
     }
     const getAuthor = async () => {
@@ -123,7 +143,7 @@ const AddBook = (props) => {
                 <Modal.Body>
                     <form onSubmit={(e) => handleSubmit(e)} >
                         <div className='container'>
-                            <div className='col-md-9 offset-md-1'>
+                            <div className='col-md-10 offset-md-1'>
                                 <label>Name:</label>
                                 <input className='form-control' type='text'
                                     placeholder='Nhập tên sách'
@@ -131,7 +151,7 @@ const AddBook = (props) => {
                                     onChange={(e) => setData({ ...data, name: e.target.value })}
                                 />
                             </div>
-                            <div className='col-md-9 offset-md-1'>
+                            <div className='col-md-10 offset-md-1'>
                                 <label>Tiêu đề:</label>
                                 <input className='form-control' type='text'
                                     placeholder='Nhập tiêu đề'
@@ -139,14 +159,14 @@ const AddBook = (props) => {
                                     onChange={(e) => setData({ ...data, title: e.target.value })}
                                 />
                             </div>
-                            <div className='col-md-9 offset-md-1'>
+                            <div className='col-md-10 offset-md-1'>
                                 <label>Tệp ảnh:</label>
                                 <input className='form-control' type='file'
                                     placeholder='Nhập tệp sách'
                                     onChange={(e) => setFile(e.target.files[0])}
                                 />
                             </div>
-                            <div className='col-md-9 offset-md-1'>
+                            <div className='col-md-10 offset-md-1'>
                                 <label>Mô tả:</label>
                                 <textarea className='form-control' type='text'
                                     placeholder='Nhập mô tả'
@@ -154,14 +174,14 @@ const AddBook = (props) => {
                                     onChange={(e) => setData({ ...data, description: e.target.value })}
                                 />
                             </div>
-                            <div className='col-md-9 offset-md-1'>
+                            <div className='col-md-10 offset-md-1'>
                                 <label>Ngày SB:</label>
                                 <input className='form-control' type='date'
                                     value={data.publicationdate}
                                     onChange={(e) => setData({ ...data, publicationdate: e.target.value })}
                                 />
                             </div>
-                            <div className='col-md-9 offset-md-1 my-2'>
+                            <div className='col-md-10 offset-md-1 my-2'>
                                 <label>Tác giả:</label>
                                 <select className='text-center' defaultValue={!data.author.id && "default"}
                                     onChange={(e) => setData({ ...data, author: { id: e.target.value } })}>
@@ -173,7 +193,7 @@ const AddBook = (props) => {
                                     })}
                                 </select>
                             </div>
-                            <div className='col-md-9 offset-md-1'>
+                            <div className='col-md-10 offset-md-1'>
                                 <label>Thể loại:</label>
                                 <select className='text-center' defaultValue={!data.category.id && "default"}
                                     onChange={(e) => setData({ ...data, category: { id: e.target.value } })}>
@@ -185,15 +205,15 @@ const AddBook = (props) => {
                                     })}
                                 </select>
                             </div>
-                            <div className='col-md-9 offset-md-1'>
-                                <label>Giá:</label>
-                                <input className='form-control' type='number'
-                                    placeholder='Nhập giá:'
+                            <div className='col-md-10 offset-md-1'>
+                                <label>Giá bán:</label>
+                                <input className='form-control' type='number' min={0}
+                                    placeholder='Nhập giá bán'
                                     value={data.price}
                                     onChange={(e) => setData({ ...data, price: e.target.value })}
                                 />
                             </div>
-                            <div className='col-md-9 offset-md-1'>
+                            <div className='col-md-10 offset-md-1'>
                                 <label>Số lượng:</label>
                                 <input className='form-control' type='number'
                                     placeholder='Nhập số lượng'
@@ -201,7 +221,23 @@ const AddBook = (props) => {
                                     onChange={(e) => setData({ ...data, count: e.target.value })}
                                 />
                             </div>
-                            <div className='col-md-9 offset-md-1 d-flex gap-2 mt-2 justify-content-end'>
+                            <div className='col-md-10 offset-md-1'>
+                                <label>Giảm giá:</label>
+                                <input className='form-control' type='text' max={data.price}
+                                    placeholder='Nhập giảm giá'
+                                    value={(data.sale)}
+                                    onChange={(e) => setData({ ...data, sale: e.target.value })}
+                                />
+                            </div>
+                            <div className='col-md-10 offset-md-1'>
+                                <label>Giá cuối:</label>
+                                <input className='form-control' type='text'
+                                    readOnly
+                                    placeholder='Nhập giá bán và giảm giá để tự động tính'
+                                    value={(data.priceend).toLocaleString('vi-VN') + " VND"}
+                                />
+                            </div>
+                            <div className='col-md-10 offset-md-1 d-flex gap-2 mt-2 justify-content-end'>
                                 <button className='btn btn-outline-secondary' type='submit'>Thêm</button>
                                 <button className='btn btn-outline-primary' type='button' onClick={() => handleOnClickClose()} > Trở về</button>
                             </div>

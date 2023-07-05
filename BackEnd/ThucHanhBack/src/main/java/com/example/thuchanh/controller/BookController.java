@@ -20,7 +20,7 @@ public class BookController {
     public ResponseEntity<?> getAllBook(@PathVariable("page") int page, @PathVariable("size") int size){
         return ResponseEntity.ok(bookService.getAll(page, size));
     }
-    @PostMapping("/{username}")
+    @PostMapping("/add/{username}")
     public ResponseEntity<?> addBook(@PathVariable("username") String username, @RequestBody Book book){
         if (bookService.isCheckImageFile(book.getImagefile())){
             return ResponseEntity.status(400).body("Tên ảnh này đã tồn tại");
@@ -29,7 +29,7 @@ public class BookController {
         }
         return ResponseEntity.ok().build();
     }
-    @PutMapping("/{username}")
+    @PutMapping("/update/{username}")
     public ResponseEntity<?> updateBook(@PathVariable("username") String username, @RequestBody Book book){
         if (bookService.isCheckImageFile(book.getImagefile())){
             return ResponseEntity.status(400).body("Tên ảnh này đã tồn tại");
@@ -38,7 +38,7 @@ public class BookController {
         }
         return ResponseEntity.ok().build();
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping("delete/{id}")
     public void deleteBook(@PathVariable("id") Long id){
         bookService.deleteBook(id);
     }

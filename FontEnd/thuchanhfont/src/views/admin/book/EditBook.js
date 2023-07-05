@@ -16,10 +16,12 @@ const EditBook = (props) => {
         title: "",
         description: "",
         price: "",
+        priceend: "",
         count: "",
+        sale: "",
         publicationdate: "",
         author: {
-            name: ""
+            id: ""
         },
         category: {
             id: ""
@@ -34,7 +36,9 @@ const EditBook = (props) => {
             title: props.value.title,
             description: props.value.description,
             price: props.value.price,
+            priceend: 0,
             count: props.value.count,
+            sale: props.value.sale,
             publicationdate: props.value.publicationdate,
             author: {
                 id: props.value.author.id
@@ -44,12 +48,27 @@ const EditBook = (props) => {
             }
         })
     }, [])
+    useEffect(() => {
+        if (data.price && data.sale && parseInt(data.price) >= parseInt(data.sale)) {
+            setData({
+                ...data, priceend: (data.price - data.sale)
+            })
+        } else if (parseInt(data.price) < parseInt(data.sale)) {
+            setData({
+                ...data, priceend: (0)
+            })
+        }
+    }, [data.price, data.sale])
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!isDataEmpty(data) && !data.author.id && !data.category.id) {
             toast.error("Vui lòng nhập đủ các trường !!");
+            return;
+        }
+        if (parseInt(data.price) < parseInt(data.sale)) {
+            toast.error("Giảm giá phải nhỏ hơn hoặc bằng giá bán !!");
             return;
         }
         const formData = new FormData();
@@ -61,18 +80,21 @@ const EditBook = (props) => {
             }
         }).then((response) => {
             var array = { ...data, imagefile: response.data }
-            axios.put(`http://localhost:8081/book/${props.userName}`, array, {
+            axios.put(`http://localhost:8081/book/update/${props.userName}`, array, {
                 headers: {
                     Authorization: `Bearer ${sessionStorage.getItem("token")}`,
                 }
             }).then(() => {
                 toast.success("Sửa thành công sách");
                 setData({
+                    id: "",
                     name: "",
                     title: "",
                     description: "",
                     price: "",
+                    priceend: "",
                     count: "",
+                    sale: "",
                     publicationdate: "",
                     author: {
                         id: ""
@@ -212,6 +234,22 @@ const EditBook = (props) => {
                                     placeholder='Nhập số lượng'
                                     value={data.count}
                                     onChange={(e) => setData({ ...data, count: e.target.value })}
+                                />
+                            </div>
+                            <div className='col-md-10 offset-md-1'>
+                                <label>Giảm giá:</label>
+                                <input className='form-control' type='text' max={data.price}
+                                    placeholder='Nhập giảm giá'
+                                    value={(data.sale)}
+                                    onChange={(e) => setData({ ...data, sale: e.target.value })}
+                                />
+                            </div>
+                            <div className='col-md-10 offset-md-1'>
+                                <label>Giá cuối:</label>
+                                <input className='form-control' type='text'
+                                    readOnly
+                                    placeholder='Nhập giá bán và giảm giá để tự động tính'
+                                    value={(data.priceend).toLocaleString('vi-VN') + " VND"}
                                 />
                             </div>
                             <div className='col-md-9 offset-md-1 d-flex gap-2 mt-2 justify-content-end'>

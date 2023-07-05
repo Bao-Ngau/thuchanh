@@ -1,15 +1,32 @@
+import { Carousel, Image } from "react-bootstrap";
 const Header = () => {
     return (
-        <>
-            <header className="bg-dark py-5">
-                <div className="container px-4 px-lg-5 my-5">
-                    <div className="text-center text-white">
-                        <h1 className="display-4 fw-bolder">Shop in style</h1>
-                        <p className="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
-                    </div>
-                </div>
-            </header>
-        </>
+        <Carousel className="bg-dark mt-1" data-bs-theme="dark" style={{ zIndex: 0 }}>
+            <Carousel.Item interval={10000}>
+                <img
+                    className="d-flex m-auto"
+                    style={{ width: '100%', height: '400px' }}
+                    src="./booksale.jpg"
+                    alt="First slide"
+                />
+                <Carousel.Caption>
+                    {/* nội đụng nếu có */}
+                </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item interval={10000}>
+                <img
+                    className="d-flex m-auto"
+                    style={{ width: '100%', height: '400px' }}
+                    src="./book1.jpg"
+                    alt="First slide"
+                />
+                <Carousel.Caption>
+                    {/* nội đụng nếu có */}
+                </Carousel.Caption>
+            </Carousel.Item>
+
+
+        </Carousel>
     )
 }
 export default Header;

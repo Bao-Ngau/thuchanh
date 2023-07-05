@@ -42,6 +42,8 @@ public class BookService implements IBookService {
                     .imagefile(book.getImagefile())
                     .price(book.getPrice())
                     .count(book.getCount())
+                    .sale(book.getSale())
+                    .priceend(book.getPriceend())
                     .description(book.getDescription())
                     .publicationdate(book.getPublicationdate())
                     .author(book.getAuthor())
@@ -65,6 +67,8 @@ public class BookService implements IBookService {
             newBook.setImagefile(book.getImagefile());
             newBook.setPrice(book.getPrice());
             newBook.setCount(book.getCount());
+            newBook.setPriceend(book.getPriceend());
+            newBook.setSale(book.getSale());
             newBook.setDescription(book.getDescription());
             newBook.setPublicationdate(book.getPublicationdate());
             newBook.setAuthor(book.getAuthor());

@@ -1,6 +1,7 @@
 package com.example.thuchanh.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,7 +32,10 @@ public class Book {
     private Integer price;
     private Integer count;
     @Builder.Default
+    private Integer sale = 0;
+    @Builder.Default
     private Integer countsell = 0;
+    private Integer priceend = 0;
     private String description;
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private String publicationdate;

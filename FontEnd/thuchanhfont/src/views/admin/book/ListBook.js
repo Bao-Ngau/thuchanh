@@ -58,7 +58,7 @@ const ListBook = (props) => {
                     'Authorization': `Bearer ${sessionStorage.getItem("token")}`
                 }
             }).then(() => {
-                axios.delete(`http://localhost:8081/book/${value.id}`, {
+                axios.delete(`http://localhost:8081/book/delete/${value.id}`, {
                     headers: {
                         'Authorization': `Bearer ${sessionStorage.getItem("token")}`
                     }
@@ -124,6 +124,8 @@ const ListBook = (props) => {
                                         <th scope="col">Giá</th>
                                         <th scope="col">Số lượng</th>
                                         <th scope="col">Đã bán</th>
+                                        <th scope="col">Giảm giá</th>
+                                        <th scope="col">Giá cuối</th>
                                         <th scope="col">Ngày thêm</th>
                                         <th scope="col">Người sửa</th>
                                         {(props.role === "SUPER_ADMIN" || props.role === "ADMIN") && <th scope="col">Thao tác</th>}
@@ -136,7 +138,7 @@ const ListBook = (props) => {
                                                 <th scope="row">{value.id}</th>
                                                 <td>{value.name}</td>
                                                 <td>{value.title}</td>
-                                                <td>{!value.imagefile ? "" : value.imagefile.slice(38)}</td>
+                                                <td>{!value.imagefile ? "" : value.imagefile.slice(75)}</td>
                                                 <td style={{ width: "10%" }}>
                                                     <OverlayTrigger
                                                         placement="top"
@@ -148,9 +150,11 @@ const ListBook = (props) => {
                                                 <td>{value.publicationdate}</td>
                                                 <td>{value.author.name}</td>
                                                 <td>{value.category.name}</td>
-                                                <td>{value.price}</td>
-                                                <td>{value.count}</td>
+                                                <td>{(value.price).toLocaleString('vi-VN')}</td>
+                                                <td>{(value.count).toLocaleString('vi-VN')}</td>
                                                 <td>{value.countsell}</td>
+                                                <td>{(value.sale).toLocaleString('vi-VN')}</td>
+                                                <td>{(!value.priceend ? "" : value.priceend).toLocaleString('vi-VN')}</td>
                                                 <td>{new Date(value.createddate).toLocaleString()}</td>
                                                 <td>{value.createdby}</td>
                                                 {(props.role === "SUPER_ADMIN" || props.role === "ADMIN")

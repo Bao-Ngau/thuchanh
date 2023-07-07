@@ -115,9 +115,9 @@ const ListBook = (props) => {
                                     <tr>
                                         <th scope="col">Mã</th>
                                         <th scope="col">Tên sách</th>
-                                        <th scope="col">Tiêu đề</th>
                                         <th scope="col">Tệp ảnh</th>
                                         <th scope="col">Mô tả</th>
+                                        <th scope="col">Tác dụng</th>
                                         <th scope="col">Ngày XB</th>
                                         <th scope="col">Tác giả</th>
                                         <th scope="col">Thể loại</th>
@@ -137,14 +137,21 @@ const ListBook = (props) => {
                                             <tr key={value.id}>
                                                 <th scope="row">{value.id}</th>
                                                 <td>{value.name}</td>
-                                                <td>{value.title}</td>
                                                 <td>{!value.imagefile ? "" : value.imagefile.slice(75)}</td>
                                                 <td style={{ width: "10%" }}>
                                                     <OverlayTrigger
                                                         placement="top"
                                                         overlay={<Tooltip>{value.description}</Tooltip>}
                                                     >
-                                                        <p style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "260px", padding: 0, margin: 0 }}>{value.description}</p>
+                                                        <p style={{ whiteSpace: "pre-line", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "260px", padding: 0, margin: 0 }}>{value.description}</p>
+                                                    </OverlayTrigger>
+                                                </td>
+                                                <td style={{ width: "10%" }}>
+                                                    <OverlayTrigger
+                                                        placement="top"
+                                                        overlay={<Tooltip>{value.action}</Tooltip>}
+                                                    >
+                                                        <p style={{ whiteSpace: "pre-line", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "260px", padding: 0, margin: 0 }}>{value.action}</p>
                                                     </OverlayTrigger>
                                                 </td>
                                                 <td>{value.publicationdate}</td>

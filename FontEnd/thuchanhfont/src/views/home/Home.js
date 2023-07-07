@@ -1,13 +1,11 @@
 import Body from "./Body";
 import Header from "./Header";
 import Navv from "./Navv"
-import Footer from "./Footerr";
+import Footer from "./Footer";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
 const Home = (props) => {
-
-
 
     const [dataCategorys, setDataCategorys] = useState();
     const [dataAuthors, setDataAuthors] = useState();

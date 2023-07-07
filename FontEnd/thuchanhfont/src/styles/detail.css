@@ -1,0 +1,24 @@
+.price-sell {
+    font-size: 1.24rem;
+    font-weight: 500;
+}
+
+.original-price {
+    text-decoration: line-through;
+    font-size: 1.24rem;
+}
+
+.discount-percentage {
+    position: relative;
+    top: -32%;
+    left: 2%;
+    background-color: red;
+    border-radius: 50%;
+    color: white;
+    padding: 1px;
+    font-size: 0.75rem;
+}
+
+.original-price-end {
+    font-size: 1.24rem;
+}

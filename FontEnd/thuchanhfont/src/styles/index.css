@@ -1,4 +1,5 @@
 body {
+  background-color: #edf1f5;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -10,4 +11,18 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.original-price-home {
+  text-decoration: line-through;
+}
+
+.discount-percentage-home {
+  position: relative;
+  top: -32%;
+  left: 2%;
+  border-radius: 50%;
+  color: red;
+  padding: 1px;
+  font-size: 0.75rem;
 }

@@ -13,12 +13,12 @@ const EditBook = (props) => {
     const [data, setData] = useState({
         id: "",
         name: "",
-        title: "",
         description: "",
         price: "",
         priceend: "",
         count: "",
         sale: "",
+        action: "",
         publicationdate: "",
         author: {
             id: ""
@@ -33,12 +33,12 @@ const EditBook = (props) => {
         setData({
             id: props.value.id,
             name: props.value.name,
-            title: props.value.title,
             description: props.value.description,
             price: props.value.price,
             priceend: 0,
             count: props.value.count,
             sale: props.value.sale,
+            action: props.value.action,
             publicationdate: props.value.publicationdate,
             author: {
                 id: props.value.author.id
@@ -89,12 +89,12 @@ const EditBook = (props) => {
                 setData({
                     id: "",
                     name: "",
-                    title: "",
                     description: "",
                     price: "",
                     priceend: "",
                     count: "",
                     sale: "",
+                    action: "",
                     publicationdate: "",
                     author: {
                         id: ""
@@ -167,14 +167,6 @@ const EditBook = (props) => {
                                 />
                             </div>
                             <div className='col-md-9 offset-md-1'>
-                                <label>Tiêu đề:</label>
-                                <input className='form-control' type='text'
-                                    placeholder='Nhập tiêu đề'
-                                    value={data.title}
-                                    onChange={(e) => setData({ ...data, title: e.target.value })}
-                                />
-                            </div>
-                            <div className='col-md-9 offset-md-1'>
                                 <label>Tệp ảnh:</label>
                                 <input className='form-control' type='file'
                                     placeholder='Nhập tệp sách'
@@ -187,6 +179,14 @@ const EditBook = (props) => {
                                     placeholder='Nhập mô tả'
                                     value={data.description}
                                     onChange={(e) => setData({ ...data, description: e.target.value })}
+                                />
+                            </div>
+                            <div className='col-md-10 offset-md-1'>
+                                <label>Tác dụng:</label>
+                                <textarea className='form-control' type='text'
+                                    placeholder='Nhập tác dụng'
+                                    value={data.action}
+                                    onChange={(e) => setData({ ...data, action: e.target.value })}
                                 />
                             </div>
                             <div className='col-md-9 offset-md-1'>

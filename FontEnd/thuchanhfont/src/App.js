@@ -8,6 +8,7 @@ import Register from "./views/home/loginAndRegister/Register";
 import RouteAdmin from "./views/admin/RouteAdmin";
 import RenderToken from "./custom/renderToken";
 import { useEffect, useState } from "react";
+import Details from "./views/home/detail/Details";
 
 function App() {
   const [showToken, setShowToken] = useState(false);
@@ -35,9 +36,10 @@ function App() {
       />}
       <Routes >
         <Route path="/" element={<Home setIsLogin={setIsLogin} />} />
+        <Route path="/detail/:bookID" element={<Details setIsLogin={setIsLogin} />} />
         <Route path="/login" element={<Login setIsLogin={setIsLogin} />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/admin/*" element={<RouteAdmin setIsLogin={setIsLogin} />} />
+        <Route path="/admin/*" element={<RouteAdmin />} />
       </Routes >
       <ToastContainer
         position="top-right"

@@ -62,5 +62,8 @@ public class BookController {
         bookService.deleteImageFile(nameFile);
         return ResponseEntity.ok().build();
     }
-
+    @GetMapping("/getbyid/{id}")
+    public ResponseEntity<?> getBookById(@PathVariable("id") Long id){
+        return ResponseEntity.ok(bookService.getBookById(id));
+    }
 }

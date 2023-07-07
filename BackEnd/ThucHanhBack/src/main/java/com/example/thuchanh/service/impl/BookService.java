@@ -38,13 +38,13 @@ public class BookService implements IBookService {
         try {
             var newBook = Book.builder()
                     .name(book.getName())
-                    .title(book.getTitle())
                     .imagefile(book.getImagefile())
                     .price(book.getPrice())
                     .count(book.getCount())
                     .sale(book.getSale())
                     .priceend(book.getPriceend())
                     .description(book.getDescription())
+                    .action(book.getAction())
                     .publicationdate(book.getPublicationdate())
                     .author(book.getAuthor())
                     .category(book.getCategory())
@@ -63,13 +63,13 @@ public class BookService implements IBookService {
         var newBook = optionalBook.get();
         if (optionalBook.isPresent()){
             newBook.setName(book.getName());
-            newBook.setTitle(book.getTitle());
             newBook.setImagefile(book.getImagefile());
             newBook.setPrice(book.getPrice());
             newBook.setCount(book.getCount());
             newBook.setPriceend(book.getPriceend());
             newBook.setSale(book.getSale());
             newBook.setDescription(book.getDescription());
+            newBook.setAction(book.getAction());
             newBook.setPublicationdate(book.getPublicationdate());
             newBook.setAuthor(book.getAuthor());
             newBook.setCategory(book.getCategory());
@@ -145,5 +145,8 @@ public class BookService implements IBookService {
                 existingFile.delete();
             }
         }
+    }
+    public Optional<Book> getBookById(Long id){
+        return bookRepository.findById(id);
     }
 }

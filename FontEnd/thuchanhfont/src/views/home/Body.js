@@ -4,6 +4,7 @@ import ReactPaginate from "react-paginate";
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Body = (props) => {
     const [page, setPage] = useState(0);
@@ -16,7 +17,7 @@ const Body = (props) => {
     const handlePageClick = (e) => {
         setPage(e.selected);
     }
-
+    console.log(dataBooks);
     const getBook = (page, size) => {
         axios.get(
             `http://localhost:8081/book/${page}/${size}`
@@ -36,21 +37,30 @@ const Body = (props) => {
                             return (
                                 <div className="col mb-5" key={index}>
                                     <div className="card">
-                                        <div className="badge bg-dark text-white position-absolute" style={{ top: 0.5 + "rem", right: 0.5 + "rem" }}>Sale</div>
-                                        <img className="card-img-top" style={{ width: "100%", height: "270px" }} src={"./" + (value.imagefile).slice(68)} alt="..." />
-                                        <div className="card-body p-3">
+                                        <div className="badge bg-dark text-white position-absolute" style={{ top: 0.5 + "rem", right: 0.5 + "rem" }}>
+                                            Sale: {((value.sale / value.price) * 100).toFixed(2)}%
+                                        </div>
+                                        <img className="card-img-top" style={{ width: "100%", height: "270px" }} src={"./" + (value.imagefile).slice(68)} />
+                                        <div className="card-body p-2">
                                             <div className="text-start">
-                                                <h5 className="fw-bolder">Special Item</h5>
-                                                <p>Hahahah</p>
-                                                <div className="d-flex justify-content-center small text-warning mb-2">
+                                                <h5 className="fw-bolder">{value.name}</h5>
+                                                {/* <div className="d-flex justify-content-center small text-warning mb-2">
                                                     <FontAwesomeIcon icon={faStar} style={{ color: "#e4f500" }} size="lg" />
+                                                </div> */}
+                                                <div className="d-flex">
+                                                    <div>
+                                                        <span className="original-price-home">{value && value.price.toLocaleString("vi-VN")} đ</span>
+                                                        <span className="discount-percentage-home">{value && ((value.sale / value.price) * 100).toFixed(2)}%</span>
+                                                    </div>
+                                                    <span className="original-price-end-home">-&gt;{value && value.priceend.toLocaleString("vi-VN")} đ</span>
                                                 </div>
-                                                <span className="text-muted text-decoration-line-through">$20.00</span>
-                                                $18.00
+                                                <div>Thể loại: {value.category.name}</div>
                                             </div>
                                         </div>
                                         <div className="card-footer p-4 pt-0 border-top-0 bg-transparent d-flex d-flex justify-content-around">
-                                            <div className=""><a className="btn btn-outline-info" href="#">Show</a></div>
+                                            <div className="">
+                                                <Link className="btn btn-outline-info" to={`/detail/${value.id}`}>Show</Link>
+                                            </div>
                                             <div className="btn btn-outline-danger">
                                                 <FontAwesomeIcon icon={faCartPlus} style={{ color: "blue" }} size='lg' />
                                             </div>

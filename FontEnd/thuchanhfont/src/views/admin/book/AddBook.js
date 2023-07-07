@@ -1,4 +1,3 @@
-import { config } from '@fortawesome/fontawesome-svg-core';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -13,12 +12,12 @@ const AddBook = (props) => {
     const [file, setFile] = useState();
     const [data, setData] = useState({
         name: "",
-        title: "",
         description: "",
         price: "",
         priceend: "",
         count: "",
         sale: "",
+        action: "",
         publicationdate: "",
         author: {
             id: ""
@@ -71,12 +70,12 @@ const AddBook = (props) => {
                 if (response.status === 200) {
                     setData({
                         name: "",
-                        title: "",
                         description: "",
                         price: "",
                         priceend: "",
                         count: "",
                         sale: "",
+                        action: "",
                         publicationdate: "",
                         author: {
                             id: ""
@@ -152,14 +151,6 @@ const AddBook = (props) => {
                                 />
                             </div>
                             <div className='col-md-10 offset-md-1'>
-                                <label>Tiêu đề:</label>
-                                <input className='form-control' type='text'
-                                    placeholder='Nhập tiêu đề'
-                                    value={data.title}
-                                    onChange={(e) => setData({ ...data, title: e.target.value })}
-                                />
-                            </div>
-                            <div className='col-md-10 offset-md-1'>
                                 <label>Tệp ảnh:</label>
                                 <input className='form-control' type='file'
                                     placeholder='Nhập tệp sách'
@@ -172,6 +163,14 @@ const AddBook = (props) => {
                                     placeholder='Nhập mô tả'
                                     value={data.description}
                                     onChange={(e) => setData({ ...data, description: e.target.value })}
+                                />
+                            </div>
+                            <div className='col-md-10 offset-md-1'>
+                                <label>Tác dụng:</label>
+                                <textarea className='form-control' type='text'
+                                    placeholder='Nhập tác dụng'
+                                    value={data.action}
+                                    onChange={(e) => setData({ ...data, action: e.target.value })}
                                 />
                             </div>
                             <div className='col-md-10 offset-md-1'>

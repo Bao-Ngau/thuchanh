@@ -27,7 +27,6 @@ public class Book {
     private Long id;
     @Column(unique = true)
     private String name;
-    private String title;
     private String imagefile;
     private Integer price;
     private Integer count;
@@ -37,6 +36,7 @@ public class Book {
     private Integer countsell = 0;
     private Integer priceend = 0;
     private String description;
+    private String action;
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private String publicationdate;
     @ManyToOne(fetch = FetchType.EAGER)

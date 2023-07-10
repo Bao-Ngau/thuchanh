@@ -19,8 +19,8 @@ code {
 
 .discount-percentage-home {
   position: relative;
-  top: -32%;
-  left: 2%;
+  top: -3px;
+  /* left: 2%; */
   border-radius: 50%;
   color: red;
   padding: 1px;

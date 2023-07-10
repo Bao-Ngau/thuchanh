@@ -66,7 +66,9 @@ public class AuthenticationService {
         String jwtTokenGenerateRecreate = null;
         if (exTokenHeader.get("ip").toString().equals(exTokenRefreshData.get("ip").toString())){
             jwtTokenGenerateRecreate = jwtService.generateToken(
-                    exTokenHeader.getSubject(),exTokenHeader.get("fullName").toString(),
+                    tokenData.getId(),
+                    exTokenHeader.getSubject(),
+                    exTokenHeader.get("fullName").toString(),
                     exTokenHeader.get("role").toString());
         }
         return AuthenticationResponse.builder()

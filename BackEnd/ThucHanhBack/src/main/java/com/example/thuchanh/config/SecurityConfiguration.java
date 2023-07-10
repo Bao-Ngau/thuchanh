@@ -40,6 +40,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                         .requestMatchers("/author/{page}/{size}","/author/add/**","/author/update/**","/author/delete/**","/author/search/**").hasAnyAuthority(ERole.ADMIN.name(),ERole.SUPER_ADMIN.name())
                         .requestMatchers("/book/{page}/{size}","/book/getbyid/{id}").permitAll()
                         .requestMatchers("/book/add/**","/book/update/**","/book/delete/**","/book/search/**","/book/upload","/book/updateimg","/book/deleteimg").hasAnyAuthority(ERole.ADMIN.name(),ERole.SUPER_ADMIN.name())
+                        .requestMatchers("/order/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess->sess

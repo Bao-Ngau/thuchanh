@@ -4,6 +4,7 @@ import { Button, Nav, NavDropdown, NavLink, Navbar } from 'react-bootstrap';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Cart from './store/Cart';
 const Navv = (props) => {
 
     let userJson = sessionStorage.getItem("decodedToken")
@@ -46,10 +47,11 @@ const Navv = (props) => {
                             </NavDropdown>
                         </Nav>
                         <div className="d-flex gap-1">
-                            <button className="btn btn-outline-dark" type="submit">
-                                <FontAwesomeIcon icon={faCartPlus} style={{ color: "#c66514" }} size="lg" />
-                                <span className="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                            </button>
+                            <Cart
+                                cartItem={props.cartItem}
+                                updateToCart={props.updateToCart}
+                                deleteToCart={props.deleteToCart}
+                            />
                             {!userJson ? (
                                 <>
                                     <Link to={"/login"} className="btn btn-outline-info">Đăng nhập</Link>

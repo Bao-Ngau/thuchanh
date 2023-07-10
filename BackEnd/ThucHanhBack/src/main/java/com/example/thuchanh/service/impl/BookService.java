@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -33,6 +34,7 @@ public class BookService implements IBookService {
         return bookRepository.findAll(pageable);
     }
 
+    @Transactional
     @Override
     public boolean addBook(Book book, String username) {
         try {
@@ -57,6 +59,7 @@ public class BookService implements IBookService {
             return false;
         }
     }
+    @Transactional
     @Override
     public boolean updateBook(Book book, String username) {
         Optional<Book>  optionalBook = bookRepository.findById(book.getId());
@@ -83,6 +86,7 @@ public class BookService implements IBookService {
         }
     }
 
+    @Transactional
     @Override
     public void deleteBook(Long id) {
         bookRepository.deleteById(id);
@@ -149,4 +153,5 @@ public class BookService implements IBookService {
     public Optional<Book> getBookById(Long id){
         return bookRepository.findById(id);
     }
+
 }

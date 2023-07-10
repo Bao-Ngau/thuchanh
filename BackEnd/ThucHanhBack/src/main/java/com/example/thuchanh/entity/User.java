@@ -36,6 +36,7 @@ public class User implements UserDetails {
     @Column(nullable = false)
     @JsonIgnore
     private String password;
+    @JsonIgnore
     @Column(columnDefinition = "text")
     private String rftoken;
     @CreatedDate
@@ -44,7 +45,7 @@ public class User implements UserDetails {
     private ERole role;
     @Builder.Default
     private Integer status=1;
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "user")
     private Set<Order> orders = new HashSet<>();
 
     @Override

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -24,6 +25,7 @@ public class AuthorService implements IAuthorService {
     }
 
     @Override
+    @Transactional
     public Author addAuthor(Author author,String username) {
         var newAuthor = Author.builder()
                 .name(author.getName())
@@ -33,6 +35,7 @@ public class AuthorService implements IAuthorService {
         return authorRepository.save(newAuthor);
     }
 
+    @Transactional
     @Override
     public Author updateAuthor(Author author,String username) {
         Optional<Author> optionalAuthor = authorRepository.findById(author.getId());
@@ -45,6 +48,7 @@ public class AuthorService implements IAuthorService {
         return authorRepository.save(newAuthor);
     }
 
+    @Transactional
     @Override
     public void deleteAuthor(Long id) {
         authorRepository.deleteById(id);
@@ -55,6 +59,7 @@ public class AuthorService implements IAuthorService {
         return authorRepository.findByName(name).get();
     }
 
+    @Transactional
     @Override
     public Boolean isCheckName(String name) {
         if (authorRepository.countByName(name) >=1 ){

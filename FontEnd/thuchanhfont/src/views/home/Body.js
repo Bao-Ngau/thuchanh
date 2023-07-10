@@ -5,19 +5,18 @@ import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Body = (props) => {
     const [page, setPage] = useState(0);
-    const [size, setSize] = useState(4);
+    const [size,] = useState(4);
     const [dataBooks, setDataBook] = useState();
     useEffect(() => {
         getBook(page, size);
     }, [page]);
-
     const handlePageClick = (e) => {
         setPage(e.selected);
     }
-    console.log(dataBooks);
     const getBook = (page, size) => {
         axios.get(
             `http://localhost:8081/book/${page}/${size}`
@@ -25,6 +24,26 @@ const Body = (props) => {
             setDataBook(response.data);
         }).catch(() => {
             console.log("lỗi get home book");
+        })
+    }
+    const handOnClickAddCart = async (id) => {
+        const userName = props.userName ? props.userName : null;
+        if (!userName) {
+            toast.error("Bạn hãy đăng nhập trước khi mua hàng");
+            return;
+        }
+        await axios.post(
+            `http://localhost:8081/order/add/${userName}/${id}`
+        ).then((response) => {
+            console.log(response.data.books.id);
+            toast.success("bạn đã thêm sách vào giỏ hàng");
+            if (id === response.data.books.id) {
+                props.addToCart(response.data, "equal");
+            } else {
+                props.addToCart(response.data, "unequal");
+            }
+        }).catch(() => {
+            console.log("thêm sách vào giỏ hàng thất bại");
         })
     }
     return (
@@ -48,12 +67,10 @@ const Body = (props) => {
                                                     <FontAwesomeIcon icon={faStar} style={{ color: "#e4f500" }} size="lg" />
                                                 </div> */}
                                                 <div className="d-flex">
-                                                    <div>
-                                                        <span className="original-price-home">{value && value.price.toLocaleString("vi-VN")} đ</span>
-                                                        <span className="discount-percentage-home">{value && ((value.sale / value.price) * 100).toFixed(2)}%</span>
-                                                    </div>
-                                                    <span className="original-price-end-home">-&gt;{value && value.priceend.toLocaleString("vi-VN")} đ</span>
+                                                    <span className="original-price-home">{value && value.price.toLocaleString("vi-VN")} đ</span>
+                                                    <span className="discount-percentage-home">{value && ((value.sale / value.price) * 100).toFixed(2)}%</span>
                                                 </div>
+                                                <div className="original-price-end-home">-&gt;{value && value.priceend.toLocaleString("vi-VN")} đ</div>
                                                 <div>Thể loại: {value.category.name}</div>
                                             </div>
                                         </div>
@@ -61,7 +78,7 @@ const Body = (props) => {
                                             <div className="">
                                                 <Link className="btn btn-outline-info" to={`/detail/${value.id}`}>Show</Link>
                                             </div>
-                                            <div className="btn btn-outline-danger">
+                                            <div className="btn btn-outline-danger" onClick={() => handOnClickAddCart(value.id)}>
                                                 <FontAwesomeIcon icon={faCartPlus} style={{ color: "blue" }} size='lg' />
                                             </div>
                                         </div>

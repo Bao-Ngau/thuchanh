@@ -44,6 +44,7 @@ public class JwtService {
     public String generateToken(UserDetails userDetails){
         User user = (User) userDetails;
         Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("id",user.getId());
         extraClaims.put("fullName",user.getFullname());
         extraClaims.put("role",user.getRole().name());
         extraClaims.put("ip",getIpAddress());
@@ -61,8 +62,9 @@ public class JwtService {
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
-    public String generateToken(String username, String fullname, String role){
+    public String generateToken(Long id,String username, String fullname, String role){
         Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("id",id);
         extraClaims.put("fullName",fullname);
         extraClaims.put("role",role);
         extraClaims.put("ip",getIpAddress());

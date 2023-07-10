@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -23,6 +24,7 @@ public class CategoryService implements ICategoryService {
         return categoryRepository.findAll(pageable);
     }
 
+    @Transactional
     @Override
     public Category saveCategory(Category category,String username) {
         var newCategory = Category.builder()
@@ -33,6 +35,7 @@ public class CategoryService implements ICategoryService {
         return categoryRepository.save(newCategory);
     }
 
+    @Transactional
     @Override
     public Category updateCategory(Category categoryRq, String username) {
         Optional<Category> optionalCategory = categoryRepository.findById(categoryRq.getId());
@@ -48,6 +51,7 @@ public class CategoryService implements ICategoryService {
     }
 
 
+    @Transactional
     @Override
     public void deleteCategory(Long id) {
         categoryRepository.deleteById(id);

@@ -14,7 +14,6 @@ const Details = (props) => {
     const [dataBook, setDataBook] = useState();
 
     const { bookID } = useParams();
-
     useEffect(() => {
         document.title = "Thông tin sách";
         getAllCategorys();
@@ -57,7 +56,7 @@ const Details = (props) => {
                 dataCategorys={dataCategorys}
                 dataAuthors={dataAuthors}
             />
-            <div className="container">
+            <div className="container my-5">
                 <div className="card">
                     <div className="card-body">
                         <h3 className="card-title">{dataBook && dataBook.name}</h3>
@@ -80,7 +79,7 @@ const Details = (props) => {
                                 </div>
                                 <div className="d-flex  gap-1">
                                     <div style={{ fontWeight: "500" }}>Mô tả:</div>
-                                    <p>{dataBook && dataBook.description}</p>
+                                    <p style={{ whiteSpace: "pre-line" }}>{dataBook && dataBook.description}</p>
                                 </div>
                                 <div className="d-flex gap-1">
                                     <div className="price-sell">Giá bán:</div>
@@ -98,11 +97,9 @@ const Details = (props) => {
                                     </button>
                                     <button className="btn btn-primary btn-rounded">Buy Now</button>
                                 </div>
-                                <h3 className="box-title mt-4">Key Highlights</h3>
-                                <ul className="list-unstyled">
-                                    <li><i className="fa fa-check text-success"></i>Sturdy structure</li>
-                                    <li><i className="fa fa-check text-success"></i>Designed to foster easy portability</li>
-                                    <li><i className="fa fa-check text-success"></i>Perfect furniture to flaunt your wonderful collectibles</li>
+                                <h5 className="box-title mt-4">Điểm nổi bật:</h5>
+                                <ul className="ml-2">
+                                    <div style={{ whiteSpace: "pre-line" }}>{dataBook && dataBook.action}</div>
                                 </ul>
                             </div>
                         </div>

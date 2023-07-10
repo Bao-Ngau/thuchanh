@@ -11,9 +11,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @NoArgsConstructor
@@ -45,8 +43,7 @@ public class Book {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "categoryid")
     private Category category;
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "book_order",joinColumns = @JoinColumn(name = "book_id"),inverseJoinColumns = @JoinColumn(name = "order_id"))
+    @OneToMany(mappedBy = "books")
     private Set<Order> orders = new HashSet<>();
     @CreatedDate
     private Date createddate;

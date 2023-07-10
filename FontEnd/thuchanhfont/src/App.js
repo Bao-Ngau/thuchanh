@@ -13,7 +13,7 @@ import Details from "./views/home/detail/Details";
 function App() {
   const [showToken, setShowToken] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState();
   const [time, setTime] = useState();
   useEffect(() => {
     setToken(sessionStorage.getItem("decodedToken"));
@@ -35,7 +35,10 @@ function App() {
         setShowToken={setShowToken}
       />}
       <Routes >
-        <Route path="/" element={<Home setIsLogin={setIsLogin} />} />
+        <Route path="/" element={<Home
+          setIsLogin={setIsLogin}
+          token={token}
+        />} />
         <Route path="/detail/:bookID" element={<Details setIsLogin={setIsLogin} />} />
         <Route path="/login" element={<Login setIsLogin={setIsLogin} />} />
         <Route path="/register" element={<Register />} />

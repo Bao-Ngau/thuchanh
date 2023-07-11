@@ -9,6 +9,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -111,6 +113,18 @@ public class BookService implements IBookService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public Page<Book> findByCategoryId(int page,int size,Long id) {
+        Pageable pageable = PageRequest.of(page,size);
+        return bookRepository.findAllByCategoryId(pageable,id);
+    }
+
+    @Override
+    public Page<Book> findByAuthorId(int page,int size,Long id) {
+        Pageable pageable = PageRequest.of(page,size);
+        return bookRepository.findAllByAuthorId(pageable,id);
     }
 
     public String saveImage(MultipartFile imageFile) throws IOException {

@@ -4,22 +4,82 @@ import Navv from "./Navv"
 import Footer from "./Footer";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
 
 const Home = (props) => {
-
+    const [dataBooks, setDataBook] = useState();
     const [dataCategorys, setDataCategorys] = useState();
     const [dataAuthors, setDataAuthors] = useState();
     const [cartItem, setCartItem] = useState([]);
 
+    //pagination
+
     const user = sessionStorage.getItem("decodedToken");
     const userPaser = JSON.parse(user);
+
+
 
     useEffect(() => {
         getAllCategorys();
         getAllAuthors();
         getOrders();
     }, []);
+    const getBook = (page, size) => {
+        axios.get(
+            `http://localhost:8081/book/${page}/${size}`
+        ).then((response) => {
+            console.log(response.data);
+            setDataBook(response.data);
+        }).catch(() => {
+            console.log("lỗi get home book");
+        })
+    }
+    const getAllAuthors = async () => {
+        await axios.get(
+            `http://localhost:8081/author/get`
+        ).then((response) => {
+            setDataAuthors(response.data);
+        }).catch(() => {
+            console.log("lỗi get home category");
+        })
+    };
+    const getOrders = async () => {
+        if (!userPaser) {
+            return;
+        }
+        await axios.get(
+            `http://localhost:8081/order/getByUserId/${userPaser.sub}`
+        ).then((response) => {
+            setCartItem(response.data);
+        }).catch(() => {
+            console.log("lỗi get order");
+        })
+    }
+    const getBookByCategory = async (id) => {
+        if (!id) {
+            return;
+        }
+        await axios.get(
+            `http://localhost:8081/book/getByCategory/0/4/${id}`
+        ).then((response) => {
+            console.log(response.data);
+            setDataBook(response.data);
+        }).catch(() => {
+            console.log("getBookByCategory fail");
+        })
+    }
+    const getBookByAuthor = async (id) => {
+        if (!id) {
+            return;
+        }
+        await axios.get(
+            `http://localhost:8081/book/getByAuthor/0/4/${id}`
+        ).then((response) => {
+            console.log(response.data);
+            setDataBook(response.data);
+        }).catch(() => {
+            console.log("getBookByAuthor fail");
+        })
+    }
     const addToCart = (product, isCheck) => {
         if (isCheck === "equal") {
             const remove = cartItem.filter((item) => item.id !== product.id)
@@ -41,6 +101,7 @@ const Home = (props) => {
         });
         setCartItem(updatedItems);
     }
+
     const deleteToCart = (product) => {
         const updatedCartItems = cartItem.filter((item) => item.id !== product.id);
         setCartItem(updatedCartItems);
@@ -54,29 +115,6 @@ const Home = (props) => {
             console.log("lỗi get home category");
         })
     };
-    const getAllAuthors = async () => {
-        await axios.get(
-            `http://localhost:8081/author/get`
-        ).then((response) => {
-            setDataAuthors(response.data);
-        }).catch(() => {
-            console.log("lỗi get home category");
-        })
-    };
-    const getOrders = async () => {
-        if (!userPaser) {
-            return;
-        }
-        await axios.get(
-            `http://localhost:8081/order/getByUserId/${userPaser.sub}`
-        ).then((response) => {
-            setCartItem(response.data);
-        }).catch(() => {
-            console.log("lỗi get order");
-        })
-
-    }
-
     return (
         <>
             <Navv
@@ -86,11 +124,15 @@ const Home = (props) => {
                 cartItem={user ? cartItem : null}
                 updateToCart={updateToCart}
                 deleteToCart={deleteToCart}
+                getBookByCategory={getBookByCategory}
+                getBookByAuthor={getBookByAuthor}
             />
             <Header />
             <Body
-                userName={userPaser.sub}
+                userName={userPaser ? userPaser.sub : null}
                 addToCart={addToCart}
+                getBook={getBook}
+                dataBooks={dataBooks}
             />
             <Footer />
         </>

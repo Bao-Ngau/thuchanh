@@ -66,4 +66,12 @@ public class BookController {
     public ResponseEntity<?> getBookById(@PathVariable("id") Long id){
         return ResponseEntity.ok(bookService.getBookById(id));
     }
+    @GetMapping("/getByCategory/{page}/{size}/{id}")
+    public ResponseEntity<?> getBookByCategory(@PathVariable("id") Long id,@PathVariable("page") int page,@PathVariable("size") int size){
+        return ResponseEntity.ok(bookService.findByCategoryId(page,size,id));
+    }
+    @GetMapping("/getByAuthor/{page}/{size}/{id}")
+    public ResponseEntity<?> getBookByAuthor(@PathVariable("id") Long id,@PathVariable("page") int page,@PathVariable("size") int size){
+        return ResponseEntity.ok(bookService.findByAuthorId(page,size,id));
+    }
 }

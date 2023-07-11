@@ -3,6 +3,7 @@ package com.example.thuchanh.service;
 import com.example.thuchanh.entity.Book;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface IBookService {
@@ -13,4 +14,6 @@ public interface IBookService {
     Boolean isCheckName(String name);
     Optional<Book> searchByBook(String name);
     Boolean isCheckImageFile(String imagefile);
+    Page<Book> findByCategoryId(int page,int size,Long id);
+    Page<Book> findByAuthorId(int page,int size,Long id);
 }

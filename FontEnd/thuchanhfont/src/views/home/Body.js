@@ -10,22 +10,14 @@ import { toast } from "react-toastify";
 const Body = (props) => {
     const [page, setPage] = useState(0);
     const [size,] = useState(4);
-    const [dataBooks, setDataBook] = useState();
+
     useEffect(() => {
-        getBook(page, size);
+        props.getBook(page, size);
     }, [page]);
     const handlePageClick = (e) => {
         setPage(e.selected);
     }
-    const getBook = (page, size) => {
-        axios.get(
-            `http://localhost:8081/book/${page}/${size}`
-        ).then((response) => {
-            setDataBook(response.data);
-        }).catch(() => {
-            console.log("lỗi get home book");
-        })
-    }
+
     const handOnClickAddCart = async (id) => {
         const userName = props.userName ? props.userName : null;
         if (!userName) {
@@ -52,7 +44,7 @@ const Body = (props) => {
             <section className="">
                 <div className="container px-4 px-lg-5 mt-5">
                     <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                        {dataBooks && dataBooks.content.map((value, index) => {
+                        {props.dataBooks && props.dataBooks.content.map((value, index) => {
                             return (
                                 <div className="col mb-5" key={index}>
                                     <div className="card">
@@ -68,7 +60,7 @@ const Body = (props) => {
                                                 </div> */}
                                                 <div className="d-flex">
                                                     <span className="original-price-home">{value && value.price.toLocaleString("vi-VN")} đ</span>
-                                                    <span className="discount-percentage-home">{value && ((value.sale / value.price) * 100).toFixed(2)}%</span>
+                                                    <span className="discount-percentage-home">-{value && ((value.sale / value.price) * 100).toFixed(2)}%</span>
                                                 </div>
                                                 <div className="original-price-end-home">-&gt;{value && value.priceend.toLocaleString("vi-VN")} đ</div>
                                                 <div>Thể loại: {value.category.name}</div>
@@ -93,7 +85,7 @@ const Body = (props) => {
                             onPageChange={(e) => handlePageClick(e)}
                             pageRangeDisplayed={3}//số hiển thị ở giữa
                             marginPagesDisplayed={2}//số cái hiện thị đầu cuối
-                            pageCount={dataBooks ? dataBooks.totalPages : 0}
+                            pageCount={props.dataBooks ? props.dataBooks.totalPages : 0}
                             previousLabel="Trở về"
                             pageClassName="page-item"
                             pageLinkClassName="page-link"

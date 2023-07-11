@@ -15,12 +15,13 @@ code {
 
 .original-price-home {
   text-decoration: line-through;
+  text-wrap: nowrap;
 }
 
 .discount-percentage-home {
   position: relative;
   top: -3px;
-  /* left: 2%; */
+  left: 1%;
   border-radius: 50%;
   color: red;
   padding: 1px;

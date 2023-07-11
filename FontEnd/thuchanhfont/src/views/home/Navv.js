@@ -1,15 +1,18 @@
-import { faBars, faCartPlus, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button, Nav, NavDropdown, NavLink, Navbar } from 'react-bootstrap';
+import { Nav, NavDropdown, Navbar } from 'react-bootstrap';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Cart from './store/Cart';
 const Navv = (props) => {
 
     let userJson = sessionStorage.getItem("decodedToken")
     let userPaser = JSON.parse(userJson);
+
+    const location = useLocation();
     const navigate = useNavigate();
+
     const handleClose = () => {
         sessionStorage.removeItem("token");
         sessionStorage.removeItem("decodedToken");
@@ -19,34 +22,48 @@ const Navv = (props) => {
         }
         navigate("/");
     };
-
+    const handleOnClickCategory = (value) => {
+        if (!value) {
+            return;
+        }
+        props.getBookByCategory(value.id);
+    };
+    const handleOnClickAuthor = (value) => {
+        if (!value) {
+            return;
+        }
+        props.getBookByCategory(value.id);
+    }
     return (
         <>
             <Navbar bg='primary' variant='dark' expand="lg" style={{ position: 'sticky', top: 0, zIndex: 1 }}>
                 <div className="container-fluid">
-                    <Navbar.Brand to="#">Shop Book</Navbar.Brand>
+                    <Navbar.Brand><Link to={"/"} className='nav-link'>Shop Book</Link></Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarSupportedContent" className='btn-outline-info'>
                         <FontAwesomeIcon icon={faBars} />
                     </Navbar.Toggle>
                     <Navbar.Collapse id="navbarSupportedContent" className='justify-content-between'>
-                        <Nav className="navbar-nav">
-                            {/* <Nav.Link to="#" className="nav-link">Thể loại</Nav.Link> */}
-                            <NavDropdown title="Thể loại" id="dropdown-basic">
-                                {props.dataCategorys && props.dataCategorys.map((value, index) => {
-                                    return (
-                                        <NavDropdown.Item key={index}>{value.name}</NavDropdown.Item>
-                                    )
-                                })}
-                            </NavDropdown>
-                            <NavDropdown title="Tác giả" id="dropdown-basic">
-                                {props.dataAuthors && props.dataAuthors.map((value, index) => {
-                                    return (
-                                        <NavDropdown.Item key={index}>{value.name}</NavDropdown.Item>
-                                    )
-                                })}
-                            </NavDropdown>
-                        </Nav>
-                        <div className="d-flex gap-1">
+                        {location.pathname === "/" ?
+                            <Nav className="navbar-nav">
+                                <NavDropdown title="Thể loại" id="dropdown-basic">
+                                    {props.dataCategorys && props.dataCategorys.map((value, index) => {
+                                        return (
+                                            <NavDropdown.Item key={index} onClick={() => handleOnClickCategory(value)}>{value.name}</NavDropdown.Item>
+                                        )
+                                    })}
+                                </NavDropdown>
+                                <NavDropdown title="Tác giả" id="dropdown-basic">
+                                    {props.dataAuthors && props.dataAuthors.map((value, index) => {
+                                        return (
+                                            <NavDropdown.Item key={index} onClick={() => handleOnClickAuthor(value)} >{value.name}</NavDropdown.Item>
+                                        )
+                                    })}
+                                </NavDropdown>
+                            </Nav>
+                            :
+                            <div></div>
+                        }
+                        <div className="d-flex gap-1 justify-content-end">
                             <Cart
                                 cartItem={props.cartItem}
                                 updateToCart={props.updateToCart}

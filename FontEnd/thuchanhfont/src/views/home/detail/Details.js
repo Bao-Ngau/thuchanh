@@ -70,11 +70,11 @@ const Details = (props) => {
                                 <div className="d-flex mt-5 gap-5">
                                     <div className="d-flex gap-1">
                                         <div style={{ fontWeight: "500" }}>Tác giả:</div>
-                                        <p>Lorem Ipsum  </p>
+                                        <p>{dataBook && dataBook.author.name}</p>
                                     </div>
                                     <div className="d-flex gap-1">
                                         <div style={{ fontWeight: "500" }}>Thể loại:</div>
-                                        <p>Lorem Ipsum available,but </p>
+                                        <p>{dataBook && dataBook.category.name}</p>
                                     </div>
                                 </div>
                                 <div className="d-flex  gap-1">

@@ -18,6 +18,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     Page<User> findAll(Pageable pageable);
     Optional<User> findByUsername(String username);
+    Optional<User> findByEmail(String username);
     @Modifying
     @Transactional
     @Query("update User tb set  tb.rftoken = :rftoken where tb.id = :id")

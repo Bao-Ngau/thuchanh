@@ -39,6 +39,8 @@ public class User implements UserDetails {
     @JsonIgnore
     @Column(columnDefinition = "text")
     private String rftoken;
+    @JoinTable
+    private String codeemail;
     @CreatedDate
     private Date createddate;
     @Enumerated(EnumType.STRING)

@@ -1,8 +1,6 @@
 package com.example.thuchanh.auth;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +15,7 @@ public class RegisterRequest {
     private String username;
     @Email(regexp = "^[A-Za-z0-9+_.-]+@gmail.com$", message = "Nhập đúng kiểu email")
     private String email;
-    @Size(min = 6,message = "Nhập mật khẩu it nhất 6 kí tự")
+    @Size(min = 6,message = "Nhập mật khẩu ít nhất 6 kí tự")
     private String password;
     private String role;
 }

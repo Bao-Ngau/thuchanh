@@ -31,7 +31,7 @@ public class UserController {
     public ResponseEntity<?> createUser(@Validated @RequestBody RegisterRequest request , BindingResult bindingResult){
         if (service.checkCountUsernameOrEmail(request) == null){
             if (bindingResult.hasErrors()){
-                return  ResponseEntity.badRequest().body(bindingResult.getFieldError());
+                return ResponseEntity.badRequest().body(bindingResult.getFieldError());
             }else {
                 userService.saveUser(request);
                 return ResponseEntity.ok().build();

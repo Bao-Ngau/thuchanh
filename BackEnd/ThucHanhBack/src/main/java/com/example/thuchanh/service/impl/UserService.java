@@ -68,4 +68,10 @@ public class UserService implements IUserService {
     public Optional<User> searchUserByUsername(String username) {
         return userRepository.searchByUsername(username);
     }
+    public boolean checkCountEmail(String email){
+        if (userRepository.countByEmail(email)==1){
+            return true;
+        }
+        return false;
+    }
 }

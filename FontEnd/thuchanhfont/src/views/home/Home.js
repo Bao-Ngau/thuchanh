@@ -11,8 +11,6 @@ const Home = (props) => {
     const [dataAuthors, setDataAuthors] = useState();
     const [cartItem, setCartItem] = useState([]);
 
-    //pagination
-
     const user = sessionStorage.getItem("decodedToken");
     const userPaser = JSON.parse(user);
 

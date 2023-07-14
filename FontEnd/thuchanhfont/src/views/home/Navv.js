@@ -69,12 +69,22 @@ const Navv = (props) => {
                                 updateToCart={props.updateToCart}
                                 deleteToCart={props.deleteToCart}
                             />
-                            {!userJson ? (
+                            {!userJson ?
                                 <>
-                                    <Link to={"/login"} className="btn btn-outline-info">Đăng nhập</Link>
-                                    <Link to={"/register"} className="btn btn-outline-warning">Đăng ký</Link>
+                                    {(location.pathname === "/" || location.pathname === "/forgotpassword" || location.pathname.startsWith("/detail/")) &&
+                                        <>
+                                            <Link to={"/login"} className="btn btn-outline-info">Đăng nhập</Link>
+                                            <Link to={"/register"} className="btn btn-outline-warning">Đăng ký</Link>
+                                        </>
+                                    }
+                                    {location.pathname === "/login" &&
+                                        <Link to={"/register"} className="btn btn-outline-warning">Đăng ký</Link>
+                                    }
+                                    {location.pathname === "/register" &&
+                                        <Link to={"/login"} className="btn btn-outline-info">Đăng nhập</Link>
+                                    }
                                 </>
-                            ) : (
+                                :
                                 <Dropdown>
                                     <Dropdown.Toggle className="btn btn-outline-success text-white">
                                         <span>Xin chào, {userPaser.fullName} </span>
@@ -90,7 +100,7 @@ const Navv = (props) => {
                                     </Dropdown.Menu>
                                 </Dropdown>
 
-                            )}
+                            }
                         </div>
                     </Navbar.Collapse>
                 </div>

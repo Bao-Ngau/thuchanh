@@ -2,10 +2,10 @@ import Navv from "../Navv"
 import Footer from "../Footer";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "../../../styles/detail.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faClone, faClose } from "@fortawesome/free-solid-svg-icons";
 
 const Details = (props) => {
 
@@ -14,13 +14,13 @@ const Details = (props) => {
     const [dataBook, setDataBook] = useState();
 
     const { bookID } = useParams();
+    const navigate = useNavigate();
     useEffect(() => {
         document.title = "Thông tin sách";
         getAllCategorys();
         getAllAuthors();
         getBookById(bookID)
     }, []);
-
     const getAllCategorys = async () => {
         await axios.get(
             `http://localhost:8081/category/get`
@@ -49,6 +49,9 @@ const Details = (props) => {
             console.log("lỗi get home category");
         })
     };
+    const handleOnChickClose = () => {
+        navigate("/");
+    }
     return (
         <>
             <Navv
@@ -59,6 +62,11 @@ const Details = (props) => {
             <div className="container my-5">
                 <div className="card">
                     <div className="card-body">
+                        <div className="btn btn-outline-info" title="Trở về" style={{ position: "absolute", top: 0, right: 0 }}
+                            onClick={() => handleOnChickClose()}
+                        >
+                            <FontAwesomeIcon icon={faClose} />
+                        </div>
                         <h3 className="card-title">{dataBook && dataBook.name}</h3>
                         <div className="row">
                             <div className="col-lg-5 col-md-5 col-sm-6">
@@ -90,12 +98,6 @@ const Details = (props) => {
                                         </div>
                                         <span className="original-price-end">-&gt;{dataBook && dataBook.priceend.toLocaleString("vi-VN")} đ</span>
                                     </div>
-                                </div>
-                                <div className="d-flex gap-2 mt-2">
-                                    <button className="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="" data-original-title="Add to cart">
-                                        <FontAwesomeIcon icon={faCartShopping} />
-                                    </button>
-                                    <button className="btn btn-primary btn-rounded">Buy Now</button>
                                 </div>
                                 <h5 className="box-title mt-4">Điểm nổi bật:</h5>
                                 <ul className="ml-2">

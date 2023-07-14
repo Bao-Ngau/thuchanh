@@ -14,9 +14,8 @@ const Home = (props) => {
     const user = sessionStorage.getItem("decodedToken");
     const userPaser = JSON.parse(user);
 
-
-
     useEffect(() => {
+        document.title = "Trang chủ"
         getAllCategorys();
         getAllAuthors();
         getOrders();

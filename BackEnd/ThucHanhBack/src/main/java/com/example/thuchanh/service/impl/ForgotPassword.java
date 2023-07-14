@@ -7,7 +7,6 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,7 +17,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class EmailService {
+public class ForgotPassword {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JavaMailSender javaMailSender;
@@ -72,9 +71,8 @@ public class EmailService {
             newUser.setPassword(passwordEncoder.encode(request.getPassword()));
             if (passwordEncoder.matches(emailCode,newUser.getCodeemail())){
                 userRepository.save(newUser);
-                System.out.println("Đổi mật khẩu thành công");
             }else {
-                return "Đổi mật khẩu thất bại";
+                return "Đổi mật khẩu thất bại, mã code nhập không đúng";
             }
         }
         return "Đổi mật khẩu thành công";

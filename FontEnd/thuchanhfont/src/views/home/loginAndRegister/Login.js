@@ -1,8 +1,9 @@
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Navv from '../Navv';
 
 function Login(props) {
     const [user, setUser] = useState({
@@ -46,6 +47,7 @@ function Login(props) {
     }
     return (
         <>
+            <Navv />
             <form className="container">
                 <div className="d-flex flex-column align-items-center">
                     <h1>Đăng nhập</h1>
@@ -62,6 +64,7 @@ function Login(props) {
                             value={user.password}
                             onChange={(e) => setUser({ ...user, password: e.target.value })}
                         />
+                        <Link className="d-flex justify-content-end" to={"/forgotpassword"}>Quên mật khẩu</Link>
                     </div>
                     <div className='d-flex mt-3 gap-2'>
                         <button className='btn btn-outline-success' onClick={(e) => handleLogin(e)}> Đăng nhập</button>
@@ -69,7 +72,7 @@ function Login(props) {
                     </div>
                 </div>
             </form>
-        </>
+        </ >
     );
 }
 

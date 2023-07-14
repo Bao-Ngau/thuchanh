@@ -9,6 +9,7 @@ import RouteAdmin from "./views/admin/RouteAdmin";
 import RenderToken from "./custom/renderToken";
 import { useEffect, useState } from "react";
 import Details from "./views/home/detail/Details";
+import ForgotPassword from "./views/home/loginAndRegister/ForgotPassword";
 
 function App() {
   const [showToken, setShowToken] = useState(false);
@@ -41,6 +42,7 @@ function App() {
         />} />
         <Route path="/detail/:bookID" element={<Details setIsLogin={setIsLogin} />} />
         <Route path="/login" element={<Login setIsLogin={setIsLogin} />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/register" element={<Register />} />
         <Route path="/admin/*" element={<RouteAdmin />} />
       </Routes >

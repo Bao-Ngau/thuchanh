@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Navv from '../Navv';
 
 function Register() {
     const [user, setUser] = useState({
@@ -46,6 +47,7 @@ function Register() {
     }
     return (
         <>
+            <Navv />
             <form className="contaiter">
                 <div className="d-flex flex-column align-items-center">
                     <h1>Đăng ký</h1>
@@ -83,7 +85,6 @@ function Register() {
                     </div>
                 </div>
             </form>
-
         </>
     );
 }

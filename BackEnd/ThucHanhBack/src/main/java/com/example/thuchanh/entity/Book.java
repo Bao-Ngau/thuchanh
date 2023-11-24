@@ -45,6 +45,8 @@ public class Book {
     private Category category;
     @OneToMany(mappedBy = "books")
     private Set<Order> orders = new HashSet<>();
+    @OneToMany(mappedBy = "book")
+    private Set<Comment> comments = new HashSet<>();
     @CreatedDate
     private Date createddate;
     @CreatedBy

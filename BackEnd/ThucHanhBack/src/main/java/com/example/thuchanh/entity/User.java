@@ -2,8 +2,6 @@ package com.example.thuchanh.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -49,6 +47,8 @@ public class User implements UserDetails {
     private Integer status=1;
     @OneToMany(mappedBy = "user")
     private Set<Order> orders = new HashSet<>();
+    @OneToMany(mappedBy = "user")
+    private Set<Comment> comments = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
